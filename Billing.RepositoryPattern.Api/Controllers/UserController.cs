@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Billing.RepositoryPattern.Api.Models;
 using System.Collections.Generic;
-using Billing.RepositoryPattern.Api.Services;
+using Billing.RepositoryPattern.Api.Services.UserService;
 
 namespace Billing.RepositoryPattern.Api.Controllers
 {

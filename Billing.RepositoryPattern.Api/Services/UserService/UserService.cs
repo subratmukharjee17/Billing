@@ -1,26 +1,26 @@
-﻿using Billing.RepositoryPattern.Api.Adapters;
+﻿using Billing.RepositoryPattern.Api.Mappers.UserMapper;
 using Billing.RepositoryPattern.Api.Models;
 using Billing.RepositoryPattern.Shared.DbEntities;
 using System.Collections.Generic;
 
-namespace Billing.RepositoryPattern.Api.Services
+namespace Billing.RepositoryPattern.Api.Services.UserService
 {
     public class UserService : IUserService
     {
-        private readonly IUserAdapter _userAdapter;
+        private readonly IUserMapper _userMapper;
         private readonly IUnitOfWorkService _unitOfWorkService;
-        public UserService(IUnitOfWorkService unitOfWorkService, IUserAdapter userAdapter)
+        public UserService(IUnitOfWorkService unitOfWorkService, IUserMapper userMapper)
         {
             _unitOfWorkService = unitOfWorkService;
-            _userAdapter = userAdapter;
+            _userMapper = userMapper;
         }
 
         public void Add(User user)
         {
             if (Validate(user))
             {
-                _unitOfWorkService.User.Add(_userAdapter.Adapt(user));
-                _unitOfWorkService.Address.Add(_userAdapter.AdaptToUserAddress(user));
+                _unitOfWorkService.User.Add(_userMapper.Mapp(user));
+                _unitOfWorkService.Address.Add(_userMapper.MappToUserAddress(user));
 
                 _unitOfWorkService.Save();
             }
@@ -31,7 +31,7 @@ namespace Billing.RepositoryPattern.Api.Services
             List<User> listUser = new List<User>();
             foreach (UserEntity userEntity in _unitOfWorkService.User.GetAll())
             {
-                listUser.Add(_userAdapter.Adapt(userEntity,
+                listUser.Add(_userMapper.Mapp(userEntity,
                     _unitOfWorkService.Address.GetById(userEntity.Id)));
             }
             return listUser;
@@ -40,7 +40,7 @@ namespace Billing.RepositoryPattern.Api.Services
         public User Login(string loginName, string password)
         {
             UserEntity studentEntity = _unitOfWorkService.User.Login(loginName, password);
-            return _userAdapter.Adapt(studentEntity, new AddressEntity());
+            return _userMapper.Mapp(studentEntity, new AddressEntity());
         }
 
         public int GetLastUserId() =>
@@ -48,7 +48,7 @@ namespace Billing.RepositoryPattern.Api.Services
 
         public void Remove(User user)
         {
-            _unitOfWorkService.User.Remove(_userAdapter.Adapt(user));
+            _unitOfWorkService.User.Remove(_userMapper.Mapp(user));
             _unitOfWorkService.Save();
         }
 

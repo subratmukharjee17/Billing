@@ -1,17 +1,15 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using Billing.RepositoryPattern.Api.Adapters;
-using Billing.RepositoryPattern.Api.Services;
 using Billing.RepositoryPattern.DAL.DbContexts;
 using Billing.RepositoryPattern.DAL.Repositories;
 using Billing.RepositoryPattern.Shared.Interfaces;
+using Billing.RepositoryPattern.Api.Mappers.UserMapper;
+using Billing.RepositoryPattern.Api.Services.UserService;
 
 namespace Billing.RepositoryPattern.Api
 {
@@ -39,17 +37,11 @@ namespace Billing.RepositoryPattern.Api
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Billing.RepositoryPattern.Api", Version = "v1" });
             });
 
-            services.AddTransient<IStudentRepository, StudentRepository>();
-            services.AddTransient<IStudentAddressRepository, StudentAddressRepository>();
-            services.AddTransient<IStudentSportRepository, StudentSportRepository>();
-
-            services.AddTransient<IStudentAdapter, StudentAdapter>();
-            services.AddTransient<IStudentService, StudentService>();
 
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IAddressRepository, AddressRepository>();
 
-            services.AddTransient<IUserAdapter, UserAdapter>();
+            services.AddTransient<IUserMapper, UserMapper>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IRoleRepository, RoleRepository>();
             services.AddTransient<IUnitOfWorkService, UnitOfWorkService>();

@@ -1,12 +1,11 @@
-﻿using Billing.RepositoryPattern.Api.Models;
-using Billing.RepositoryPattern.Shared.DbEntities;
-using System;
+﻿using Billing.RepositoryPattern.Shared.DbEntities;
+using Billing.RepositoryPattern.Api.Models;
 
-namespace Billing.RepositoryPattern.Api.Adapters
+namespace Billing.RepositoryPattern.Api.Mappers.UserMapper
 {
-    public class UserAdapter : IUserAdapter
+    public class UserMapper : IUserMapper
     {
-        public UserEntity Adapt(User user)
+        public UserEntity Mapp(User user)
         {
             return new UserEntity()
             {
@@ -22,7 +21,7 @@ namespace Billing.RepositoryPattern.Api.Adapters
             };
         }
 
-        public AddressEntity AdaptToUserAddress(User user)
+        public AddressEntity MappToUserAddress(User user)
         {
             return new AddressEntity()
             {
@@ -38,7 +37,7 @@ namespace Billing.RepositoryPattern.Api.Adapters
             };
         }
 
-        public User Adapt(UserEntity userEntity, AddressEntity addressEntity)
+        public User Mapp(UserEntity userEntity, AddressEntity addressEntity)
         {
             return new User()
             {
@@ -52,7 +51,7 @@ namespace Billing.RepositoryPattern.Api.Adapters
                 RoleId = userEntity.RoleId,
                 UserId = userEntity.UserId,
                 AddressLine1 = addressEntity.AddressLine1,
-                AddressLine2 =addressEntity.AddressLine2,
+                AddressLine2 = addressEntity.AddressLine2,
                 City = addressEntity.City
             };
         }

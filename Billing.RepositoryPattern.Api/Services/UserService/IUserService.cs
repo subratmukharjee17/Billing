@@ -1,7 +1,7 @@
 ﻿using Billing.RepositoryPattern.Api.Models;
 using System.Collections.Generic;
 
-namespace Billing.RepositoryPattern.Api.Services
+namespace Billing.RepositoryPattern.Api.Services.UserService
 {
     public interface IUserService
     {
