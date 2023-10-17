@@ -1,5 +1,5 @@
 ﻿using Billing.RepositoryPattern.Shared.DbEntities;
-using Billing.RepositoryPattern.Api.Models;
+using Billing.RepositoryPattern.Model.Models;
 
 namespace Billing.RepositoryPattern.Api.Mappers.UserMapper
 {

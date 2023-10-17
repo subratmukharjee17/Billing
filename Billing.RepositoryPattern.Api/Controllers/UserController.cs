@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Billing.RepositoryPattern.Api.Models;
+using Billing.RepositoryPattern.Model.Models;
 using System.Collections.Generic;
 using Billing.RepositoryPattern.Api.Services.UserService;
 

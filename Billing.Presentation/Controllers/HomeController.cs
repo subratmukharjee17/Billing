@@ -1,6 +1,7 @@
 ﻿using Billing.Presentation.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using Billing.RepositoryPattern.Model.Models;
 
 namespace Billing.Presentation.Controllers
 {
@@ -16,6 +17,7 @@ namespace Billing.Presentation.Controllers
         public async Task<ActionResult> Index()
         {
             string apiUrl = "http://localhost:36942/api/User/Add";
+            User user = new User();
 
             using (HttpClient client = new HttpClient())
             {

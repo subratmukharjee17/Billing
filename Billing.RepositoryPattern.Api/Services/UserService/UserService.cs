@@ -1,5 +1,5 @@
 ﻿using Billing.RepositoryPattern.Api.Mappers.UserMapper;
-using Billing.RepositoryPattern.Api.Models;
+using Billing.RepositoryPattern.Model.Models;
 using Billing.RepositoryPattern.Shared.DbEntities;
 using System.Collections.Generic;
 

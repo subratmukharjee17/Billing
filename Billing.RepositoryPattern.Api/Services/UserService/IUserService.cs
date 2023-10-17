@@ -1,4 +1,4 @@
-﻿using Billing.RepositoryPattern.Api.Models;
+﻿using Billing.RepositoryPattern.Model.Models;
 using System.Collections.Generic;
 
 namespace Billing.RepositoryPattern.Api.Services.UserService

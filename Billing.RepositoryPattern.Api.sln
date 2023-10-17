@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Billing.RepositoryPattern.D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Billing.RepositoryPattern.Shared", "Billing.RepositoryPattern.Shared\Billing.RepositoryPattern.Shared.csproj", "{6EBAAC45-DDBD-44E4-B9CF-4DE75D64AA77}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Billing.Presentation", "Billing.Presentation\Billing.Presentation.csproj", "{AB359CB6-BCEE-4A61-A754-68EC89219328}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Billing.Presentation", "Billing.Presentation\Billing.Presentation.csproj", "{AB359CB6-BCEE-4A61-A754-68EC89219328}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Billing.RepositoryPattern.Model", "Billing.RepositoryPattern.Model\Billing.RepositoryPattern.Model.csproj", "{1BD7DC64-AECB-4592-A96B-8DC75C0EB86E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{AB359CB6-BCEE-4A61-A754-68EC89219328}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB359CB6-BCEE-4A61-A754-68EC89219328}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB359CB6-BCEE-4A61-A754-68EC89219328}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BD7DC64-AECB-4592-A96B-8DC75C0EB86E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BD7DC64-AECB-4592-A96B-8DC75C0EB86E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BD7DC64-AECB-4592-A96B-8DC75C0EB86E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BD7DC64-AECB-4592-A96B-8DC75C0EB86E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

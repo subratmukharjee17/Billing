@@ -1,4 +1,4 @@
-﻿using Billing.RepositoryPattern.Api.Models;
+﻿using Billing.RepositoryPattern.Model.Models;
 using Billing.RepositoryPattern.Shared.DbEntities;
 
 namespace Billing.RepositoryPattern.Api.Mappers.UserMapper

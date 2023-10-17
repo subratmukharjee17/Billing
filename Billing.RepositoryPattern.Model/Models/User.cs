@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Billing.RepositoryPattern.Api.Models
+namespace Billing.RepositoryPattern.Model.Models
 {
     public class User
     {
