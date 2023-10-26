@@ -1,61 +1,61 @@
-﻿using Billing.RepositoryPattern.Api.Mappers.UserMapper;
-using Billing.RepositoryPattern.Model.Models;
-using Billing.RepositoryPattern.Shared.DbEntities;
+﻿using Billing.RepositoryPattern.Api.Dtos;
+using Billing.RepositoryPattern.Domain.UnitOfWork;
+using Billing.RepositoryPattern.Domain.DbEntities;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Billing.RepositoryPattern.InfraStructure.UnitOfWork;
+using System.Linq;
 
 namespace Billing.RepositoryPattern.Api.Services.UserService
 {
     public class UserService : IUserService
     {
-        private readonly IUserMapper _userMapper;
-        private readonly IUnitOfWorkService _unitOfWorkService;
-        public UserService(IUnitOfWorkService unitOfWorkService, IUserMapper userMapper)
+        public IUnitOfWork _unitOfWork;
+        public UserService(IUnitOfWork unitOfWork)
         {
-            _unitOfWorkService = unitOfWorkService;
-            _userMapper = userMapper;
+            _unitOfWork = unitOfWork;
         }
 
-        public void Add(User user)
+        public async Task AddUser(UserDto userDto)
         {
-            if (Validate(user))
+            int count = _unitOfWork.AddressRepository.GetAll().Count();
+
+            var address = new AddressEntity
             {
-                _unitOfWorkService.User.Add(_userMapper.Mapp(user));
-                _unitOfWorkService.Address.Add(_userMapper.MappToUserAddress(user));
+                AddressLine1 = userDto.AddressLine1,
+                AddressLine2 = userDto.AddressLine2,
+                LandMark = userDto.LandMark,
+                City = userDto.City,
+                State = userDto.State,
+                Country = userDto.Country,
+                ZipCode = userDto.ZipCode,
+            };
 
-                _unitOfWorkService.Save();
-            }
-        }
-
-        public IEnumerable<User> GetAll()
-        {
-            List<User> listUser = new List<User>();
-            foreach (UserEntity userEntity in _unitOfWorkService.User.GetAll())
+            var user = new UserEntity
             {
-                listUser.Add(_userMapper.Mapp(userEntity,
-                    _unitOfWorkService.Address.GetById(userEntity.Id)));
-            }
-            return listUser;
+                FirstName = userDto.FirstName,
+                LastName = userDto.LastName,
+                UserName = userDto.UserName,
+                EmailId = userDto.EmailId,
+                PhoneNumber = userDto.PhoneNumber,
+                Password = userDto.Password,
+                ConfirmPassword = userDto.ConfirmPassword,
+                Dob = userDto.Dob,
+                Gender = userDto.Gender,
+                AddressId = count + 1,
+                RoleId = 1,
+                AuditId =1,
+            };
+
+            //_unitOfWork.AddressRepository.Add(address);
+            _unitOfWork.UserRepository.Add(user);
+            await _unitOfWork.CommitAsync();
         }
 
-        public User Login(string loginName, string password)
-        {
-            UserEntity studentEntity = _unitOfWorkService.User.Login(loginName, password);
-            return _userMapper.Mapp(studentEntity, new AddressEntity());
-        }
+        public async Task<IEnumerable<UserEntity>> GetAll()
+            => await _unitOfWork.UserRepository.GetAllAsync();
 
-        public int GetLastUserId() =>
-            _unitOfWorkService.User.GetLastUserId();
-
-        public void Remove(User user)
-        {
-            _unitOfWorkService.User.Remove(_userMapper.Mapp(user));
-            _unitOfWorkService.Save();
-        }
-
-        public bool Validate(User user)
-        {
-            //Validate Students Data
-            return true;
-        }
+        public async Task<UserEntity> Login(string userName, string password) =>
+           await _unitOfWork.UserRepository.Login(userName, password);
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Billing.Presentation.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using Billing.RepositoryPattern.Model.Models;
 
 namespace Billing.Presentation.Controllers
 {

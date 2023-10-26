@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Billing.RepositoryPattern.Shared.DbEntities;
+using Billing.RepositoryPattern.Domain.DbEntities;
 
-namespace Billing.RepositoryPattern.DAL.DbContexts
+namespace Billing.RepositoryPattern.InfraStructure
 {
     public class ApplicationDbContext : DbContext
     {
@@ -10,8 +10,20 @@ namespace Billing.RepositoryPattern.DAL.DbContexts
         {
         }
 
-        public DbSet<UserEntity> Users { get; set; }
-        public DbSet<RoleEntity> Roles { get; set; }
-        public DbSet<AddressEntity> Address { get; set; }
+        public DbSet<UserEntity> Users
+        {
+            get;
+            set;
+        }
+        public DbSet<AddressEntity> Address
+        {
+            get;
+            set;
+        }
+        public DbSet<AuditableEntity> Auditable
+        {
+            get;
+            set;
+        }
     }
 }

@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Billing.RepositoryPattern.Shared\Billing.RepositoryPattern.Shared.csproj" />
+    <ProjectReference Include="..\Billing.RepositoryPattern.Shared\Billing.RepositoryPattern.Domain.csproj" />
   </ItemGroup>
 
 </Project>

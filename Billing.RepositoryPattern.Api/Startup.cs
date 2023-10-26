@@ -5,10 +5,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Billing.RepositoryPattern.DAL.DbContexts;
-using Billing.RepositoryPattern.DAL.Repositories;
-using Billing.RepositoryPattern.Shared.Interfaces;
-using Billing.RepositoryPattern.Api.Mappers.UserMapper;
+using Billing.RepositoryPattern.Domain.UnitOfWork;
+using Billing.RepositoryPattern.InfraStructure.UnitOfWork;
+using Billing.RepositoryPattern.InfraStructure;
 using Billing.RepositoryPattern.Api.Services.UserService;
 
 namespace Billing.RepositoryPattern.Api
@@ -37,15 +36,8 @@ namespace Billing.RepositoryPattern.Api
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Billing.RepositoryPattern.Api", Version = "v1" });
             });
 
-
-            services.AddTransient<IUserRepository, UserRepository>();
-            services.AddTransient<IAddressRepository, AddressRepository>();
-
-            services.AddTransient<IUserMapper, UserMapper>();
-            services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IRoleRepository, RoleRepository>();
-            services.AddTransient<IUnitOfWorkService, UnitOfWorkService>();
-
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddTransient(typeof(IUserService), typeof(UserService));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

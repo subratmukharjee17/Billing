@@ -1,14 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 
-namespace Billing.RepositoryPattern.Shared.DbEntities
+namespace Billing.RepositoryPattern.Domain.DbEntities
 {
+    [Table("Roles", Schema = "Admin")]
     public class RoleEntity
     {
-        public int Id { get; set; }
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Column("RoleId")]
+        [DefaultValue(null)]
+        public int RoleId { get; set; }
         public string RoleName { get; set; }
         public string Desription { get; set; }
         public bool IsActive { get; set; }

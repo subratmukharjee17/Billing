@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Billing.RepositoryPattern.Model.Models;
 using System.Collections.Generic;
 using Billing.RepositoryPattern.Api.Services.UserService;
+using Billing.RepositoryPattern.Api.Dtos;
+using System.Threading.Tasks;
+using Billing.RepositoryPattern.Domain.DbEntities;
 
 namespace Billing.RepositoryPattern.Api.Controllers
 {
@@ -15,26 +17,17 @@ namespace Billing.RepositoryPattern.Api.Controllers
             _userService = userService;
         }
 
-        [HttpGet]
-        public IEnumerable<User> Get()
-        {
-            return _userService.GetAll();
-        }
+        [HttpGet(Name = "Users")]
+        public async Task<IEnumerable<UserEntity>> GetAll()
+          => await _userService.GetAll();
 
-        [HttpGet("{Login}")]
-        public User Login(string loginName, string password)
-        {
-
-            return _userService.Login(loginName, password);
-        }
 
         [HttpPost]
-        [Route("Add")]
-        public void Add([FromBody] User user)
-        {
-            int userId = _userService.GetLastUserId();
-            user.UserId = 100 + userId;
-            _userService.Add(user);
-        }
+        public async Task AddUser([FromBody] UserDto user) =>
+            await _userService.AddUser(user);
+
+        [HttpGet("Login")]
+        public async Task<UserEntity> Login(string userName, string password) =>
+            await _userService.Login(userName, password);
     }
 }
