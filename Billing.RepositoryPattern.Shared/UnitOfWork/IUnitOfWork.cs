@@ -7,6 +7,8 @@ namespace Billing.RepositoryPattern.Domain.UnitOfWork
     {
         IUserRepository UserRepository { get; }
         IAddressRepository AddressRepository { get; }
+        IMainMenuRepository MainRepository { get; }
+        ISubMenuRepository SubMenuRepository { get; }
         void Commit();
         void Rollback();
         Task CommitAsync();

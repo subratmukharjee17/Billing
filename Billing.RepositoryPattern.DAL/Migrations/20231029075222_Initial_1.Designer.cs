@@ -4,14 +4,16 @@ using Billing.RepositoryPattern.InfraStructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Billing.RepositoryPattern.InfraStructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231029075222_Initial_1")]
+    partial class Initial_1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -144,6 +146,9 @@ namespace Billing.RepositoryPattern.InfraStructure.Migrations
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("RolesRoleId")
+                        .HasColumnType("int");
+
                     b.Property<string>("SubMenuName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -152,7 +157,7 @@ namespace Billing.RepositoryPattern.InfraStructure.Migrations
 
                     b.HasIndex("MainMenuId");
 
-                    b.HasIndex("RoleId");
+                    b.HasIndex("RolesRoleId");
 
                     b.ToTable("SubMenu", "Admin");
                 });
@@ -232,15 +237,13 @@ namespace Billing.RepositoryPattern.InfraStructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Billing.RepositoryPattern.Domain.DbEntities.RoleEntity", "Role")
+                    b.HasOne("Billing.RepositoryPattern.Domain.DbEntities.RoleEntity", "Roles")
                         .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RolesRoleId");
 
                     b.Navigation("MainMenu");
 
-                    b.Navigation("Role");
+                    b.Navigation("Roles");
                 });
 
             modelBuilder.Entity("Billing.RepositoryPattern.Domain.DbEntities.UserEntity", b =>

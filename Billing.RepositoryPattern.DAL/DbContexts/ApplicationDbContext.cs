@@ -25,5 +25,15 @@ namespace Billing.RepositoryPattern.InfraStructure
             get;
             set;
         }
+        public DbSet<MainMenuEntity> MainMenu
+        {
+            get;
+            set;
+        }
+        public DbSet<SubMenuEntity> SubMenu
+        {
+            get;
+            set;
+        }
     }
 }

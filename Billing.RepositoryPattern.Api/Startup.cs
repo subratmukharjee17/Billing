@@ -38,6 +38,7 @@ namespace Billing.RepositoryPattern.Api
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddTransient(typeof(IUserService), typeof(UserService));
+            services.AddTransient(typeof(IMenuService), typeof(MenuService));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

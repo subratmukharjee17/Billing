@@ -17,12 +17,12 @@ namespace Billing.RepositoryPattern.Api.Controllers
             _userService = userService;
         }
 
-        [HttpGet(Name = "Users")]
-        public async Task<IEnumerable<UserEntity>> GetAll()
-          => await _userService.GetAll();
+        [HttpGet("GetAllUsers")]
+        public async Task<IEnumerable<UserEntity>> GetAll() =>
+            await _userService.GetAll();
 
 
-        [HttpPost]
+        [HttpPost("AddUser")]
         public async Task AddUser([FromBody] UserDto user) =>
             await _userService.AddUser(user);
 

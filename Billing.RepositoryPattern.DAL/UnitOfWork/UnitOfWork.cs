@@ -1,6 +1,10 @@
-﻿using Billing.RepositoryPattern.Domain.Interfaces;
+﻿using Billing.RepositoryPattern.InfraStructure.Repositories;
+using Billing.RepositoryPattern.Domain.Interfaces;
 using Billing.RepositoryPattern.Domain.UnitOfWork;
 using System.Threading.Tasks;
+using Billing.RepositoryPattern.Domain.DbEntities;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace Billing.RepositoryPattern.InfraStructure.UnitOfWork
 {
@@ -9,6 +13,8 @@ namespace Billing.RepositoryPattern.InfraStructure.UnitOfWork
         private readonly ApplicationDbContext _dbContext;
         private IUserRepository _userRepository;
         private IAddressRepository _addressRepository;
+        private IMainMenuRepository _mainMenuRepository;
+        private ISubMenuRepository _subMenuRepository;
 
         public UnitOfWork(ApplicationDbContext dbContext)
         {
@@ -18,12 +24,34 @@ namespace Billing.RepositoryPattern.InfraStructure.UnitOfWork
 
         public IUserRepository UserRepository
         {
-            get { return _userRepository = _userRepository ?? new UserRepository(_dbContext); }
+            get
+            {
+                return _userRepository = _userRepository ?? new UserRepository(_dbContext);
+            }
         }
 
         public IAddressRepository AddressRepository
         {
-            get { return _addressRepository = _addressRepository ?? new AddressRepository(_dbContext); }
+            get
+            {
+                return _addressRepository = _addressRepository ?? new AddressRepository(_dbContext);
+            }
+        }
+
+        public IMainMenuRepository MainRepository
+        {
+            get
+            {
+                return _mainMenuRepository = _mainMenuRepository ?? new MainMenuRepository(_dbContext);
+            }
+        }
+
+        public ISubMenuRepository SubMenuRepository
+        {
+            get
+            {
+                return _subMenuRepository = _subMenuRepository ?? new SubMenuRepository(_dbContext);
+            }
         }
 
         public void Commit()
