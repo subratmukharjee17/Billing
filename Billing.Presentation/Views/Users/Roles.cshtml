@@ -1,0 +1,193 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<!-- App container starts -->
+<div class="app-container">
+
+    <!-- App header starts -->
+    <div class="app-header d-flex align-items-center">
+
+        <!-- Toggle buttons start -->
+        <div class="d-flex">
+            <button class="btn btn-outline-primary me-2 toggle-sidebar" id="toggle-sidebar">
+                <i class="bi bi-chevron-left fs-5" id="toggle-icon-btn"></i>
+            </button>
+            <button class="btn btn-outline-primary me-2 pin-sidebar" id="pin-sidebar">
+                <i class="bi bi-chevron-left fs-5" id="icon-btn"></i>
+            </button>
+        </div>
+        <!-- Toggle buttons end -->
+        <!-- App brand sm start -->
+        <div class="app-brand-sm d-md-none d-sm-block">
+            <a href="index.html">
+                <img src="~/images/NoorFood.png" class="logo" alt="img-logo">
+            </a>
+        </div>
+        <!-- App brand sm end -->
+        <!-- App header actions start -->
+        <div class="header-actions">
+            <div class="d-lg-block d-none me-2">
+            </div>
+
+            <div class="dropdown ms-3">
+                <a id="userSettings"
+                   class="dropdown-toggle d-flex py-2 align-items-center text-decoration-none" href="#!"
+                   role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="d-none d-md-block me-2">Noor Food</span>
+                    <img src="~/images/profile.avif" class="rounded-circle img-3x"
+                         alt="Bootstrap Gallery" />
+                </a>
+                <div class="dropdown-menu dropdown-menu-end shadow">
+                    <a class="dropdown-item d-flex align-items-center" href="profile.html">
+                        <i class="bi bi-person fs-4 me-2"></i>Profile
+                    </a>
+
+                    <a class="dropdown-item d-flex align-items-center" href="https://snmatrix.com/noorfoodandagriculture/noorfood" onclick="myFunction()">
+                        <i class="bi bi-escape fs-4 me-2"></i>Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- App header actions end -->
+
+    </div>
+    <!-- App header ends -->
+    <!-- App hero header starts -->
+    <div class="app-body h-100 mt-0">
+
+        <div class="row">
+            <div class="col-xxl-12">
+                <div class="card shadow mb-4">
+                    <div class="card-header">
+                        <h4> Roles</h4>
+                    </div>
+                    <div class="card-body">
+                        <form method="GET" id="user" action="/index.html">
+
+
+
+                            <div class="row">
+                                <div class="col-lg-5  col-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Roles</label>
+                                        <input type="text" required name="fname" class="form-control"
+                                               placeholder="Enter Roles">
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-5  col-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Roles Description</label>
+                                        <input name="lname" required type="text" class="form-control"
+                                               placeholder="Enter Role Description">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-2 col-12">
+                                    <div class="mb-3">
+
+                                        <div class="d-flex justify-content-end mt-4">
+                                            <button id="submit" class="btn btn-primary btn-lg w-100"
+                                                    onclick="Save()">
+                                                Save
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </form>
+                        <div class=" card-border p-2 mt-4">
+                            <div class="row">
+                                <div class="col-8 col-lg-3 ">
+                                    <div class="d-flex">
+                                        <input type="text" class="form-control" placeholder="Search">
+                                        <button class="btn btn-primary" type="button">
+                                            <i class="bi bi-search fs-5"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="col-4 col-lg-9">
+                                    <div class="d-flex align-items-center justify-content-end">
+                                        <a title="PDF" class="px-1" href="#">
+                                            <i class="bi bi-file-pdf-fill"
+                                               style="color:red; font-size: 24px"></i>
+                                        </a>
+                                        <a title="EXCEL" href="#">
+                                            <i class="bi bi-file-earmark-spreadsheet-fill"
+                                               style="color:green; font-size: 24px"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="d-flex justify-content-center table-data-js mt-3">
+                                <div class="table-responsive p-0 w-100">
+                                    <table id="table-sell" class="table table-striped m-0">
+                                        <thead>
+                                            <tr>
+                                                <th style="font-weight: 600;">Role</th>
+                                                <th style="font-weight: 600;">Role Description</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Admin</td>
+                                                <td>Read Write</td>
+                                            </tr>
+                                            <tr>
+                                                <td>User</td>
+                                                <td>Read </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination justify-content-end mt-3 fw-bold">
+                                            <li class="page-item">
+                                                <a class="page-link" href="#">Previous</a>
+                                            </li>
+                                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                            <li class="page-item">
+                                                <a class="page-link" href="#">Next</a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- App body ends -->
+
+
+
+        </div>
+
+        <!-- App container ends -->
+    </div>
+
+    <!-- App Hero header ends -->
+    <!-- App body starts -->
+    <!-- App body ends -->
+    <!-- App footer start -->
+    <div class="app-footer position-fixed bottom-0  w-100 " style="background-color: #e9edf2;">
+        <h6>© Snmatrix 2023</h6>
+    </div>
+    <!-- App footer end -->
+
+
+</div>
+<!-- App container ends -->

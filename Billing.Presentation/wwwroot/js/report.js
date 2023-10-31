@@ -1,14 +1,14 @@
 function appendTableRow(arr) {
     $("#table-sell tbody").empty();
   if (arr && arr.length) {
-    arr.forEach((item, index) => {
+    arr.forEach((item, index) => {     
       let tr = '<tr>'
       let td = Object.keys(item);
       td.forEach((tdItem, tdIndex) => {
         console.log(item[tdItem]);
         tr +=
         //   `<td><input type="text" class="form-control" readonly placeholder="Product name" value=${item[tdItem].values}></td>`
-          `<td>${item[tdItem].values}</td>`;
+          `<td>${item[tdItem]}</td>`;
         
       });
       tr+='</tr>';

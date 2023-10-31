@@ -42,7 +42,7 @@ namespace Billing.RepositoryPattern.Api.Services.UserService
                 ConfirmPassword = userDto.ConfirmPassword,
                 Dob = userDto.Dob,
                 Gender = userDto.Gender,
-                AddressId = count + 1,
+                AddressId = count,
                 RoleId = 1,
                 AuditId =1,
             };

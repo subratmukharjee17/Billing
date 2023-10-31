@@ -1,6 +1,6 @@
 $(document).ready(function () {
   // Add and configure the validation for the form
-  $("#adduser").validate({
+  $("#user").validate({
     //     errorClass: "is-invalid",
     //   validClass: "is-valid",
     errorElement: "div", // Change the error element to a div
