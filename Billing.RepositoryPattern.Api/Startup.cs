@@ -9,6 +9,8 @@ using Billing.RepositoryPattern.Domain.UnitOfWork;
 using Billing.RepositoryPattern.InfraStructure.UnitOfWork;
 using Billing.RepositoryPattern.InfraStructure;
 using Billing.RepositoryPattern.Api.Services.UserService;
+using Billing.RepositoryPattern.Api.Services.SalesService;
+using System.Net.Http;
 
 namespace Billing.RepositoryPattern.Api
 {
@@ -35,10 +37,12 @@ namespace Billing.RepositoryPattern.Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Billing.RepositoryPattern.Api", Version = "v1" });
             });
-
+            services.AddControllersWithViews();
+            services.AddHttpClient();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddTransient(typeof(IUserService), typeof(UserService));
             services.AddTransient(typeof(IMenuService), typeof(MenuService));
+            services.AddTransient(typeof(ISalesService), typeof(SalesService));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

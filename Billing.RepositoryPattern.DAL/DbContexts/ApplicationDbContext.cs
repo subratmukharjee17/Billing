@@ -35,5 +35,10 @@ namespace Billing.RepositoryPattern.InfraStructure
             get;
             set;
         }
+        public DbSet<SalesDetailsEntity> SalesDetails 
+        {
+            get;
+            set;
+        }
     }
 }

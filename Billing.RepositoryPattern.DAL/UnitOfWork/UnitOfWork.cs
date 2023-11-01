@@ -15,6 +15,7 @@ namespace Billing.RepositoryPattern.InfraStructure.UnitOfWork
         private IAddressRepository _addressRepository;
         private IMainMenuRepository _mainMenuRepository;
         private ISubMenuRepository _subMenuRepository;
+        private ISalesDetailsRepository _salesDetailsRepository;
 
         public UnitOfWork(ApplicationDbContext dbContext)
         {
@@ -51,6 +52,14 @@ namespace Billing.RepositoryPattern.InfraStructure.UnitOfWork
             get
             {
                 return _subMenuRepository = _subMenuRepository ?? new SubMenuRepository(_dbContext);
+            }
+        }
+
+        public ISalesDetailsRepository SalesDetailsRepository
+        {
+            get
+            {
+                return _salesDetailsRepository = _salesDetailsRepository ?? new SalesDetailsRepository(_dbContext);
             }
         }
 
