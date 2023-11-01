@@ -1,74 +1,82 @@
-let faqs_row = 1;
-
-function addSells() {
-  let html = `<tr id="sell-${faqs_row}">
-<td><input type="text" name="pName" class="form-control" placeholder="Product name"></td>
-<td><input type="text" name="nos" placeholder="Nos" class="form-control"></td>
-<td><input type="text" name="weight" placeholder="wight" class="form-control"></td>
-<td><input type="text"  name="rate" placeholder="Rate" class="form-control"></td>
-<td><input type="text" name="amount"  placeholder="Amount" class="form-control"></td>
-<td class="mt-10"><button class="btn btn-danger" id="sell-btn-js"  data-rownum="${
-    "sell-" + faqs_row
-  }"><i class="bi bi-x-circle"></i> </button></td>
-</tr>`;
-
-  $("#sells tbody").append(html);
-
-  faqs_row++;
-}
-
-$(document).on("click", "#sell-btn-js", function (e) {
-  let sell = $(this).attr("data-rownum");
-  $("#" + sell).remove();
-  console.log($(this).attr("data-rownum"));
+let mainArray = [];
+$(document).on("click", ".btn-del", function (e) {
+  $(this).closest("tr").remove();
+  if ($("#table-sell tbody tr").length) {
+    $(".table-data-js").removeClass("d-none");
+    let row = $(this).attr("data-rownum");
+    mainArray.splice(+row-1,1);
+  } else {
+    $(".table-data-js").addClass("d-none");
+  }
 });
 
-$(document).on("click", ".btn-save", function (e) {
-  loadValues();
+$(document).on("click", ".btn-save-table-data", function (e) {
+  if(mainArray && mainArray.length) {
+    localStorage.setItem('tableData',JSON.stringify(mainArray));
+    showSuccess(`<div class="" >
+   Saved successfully.
+  </div>`,'success')
+  } else {
+    showSuccess(`<div class="" >
+   Error, Please try again!
+   </div>`,'danger');
+  }
+
+  
+  console.log(mainArray);
 });
-
-function loadValues() {
-  let mainArr = [];
-  let tmpArr = [];
-  var mainTable = $("#sells");
-  var tr = mainTable.find("tbody tr");
-  tr.each(function () {
-    tmpArr = []; // has to clean on every found for take every td values into array
-    $(this)
-      .find("td")
-      .each(function () {
-        var values = $(this).find("input, select").val();
-        var key = $(this).find("input, select").attr("name");
-        console.log(key);
-
-        if (values) tmpArr.push({ key, values });
-      });
-    mainArr.push(tmpArr);
-  });
-  console.log(mainArr);
-  appendTableRow(mainArr);
-  localStorage.setItem('tableData',JSON.stringify(mainArr));
-}
 
 function appendTableRow(arr) {
-    $("#table-sell tbody").empty();
-  if (arr && arr.length) {
-    arr.forEach((item, index) => {
-      let tr = '<tr>'
-      let td = Object.keys(item);
-      td.forEach((tdItem, tdIndex) => {
-        console.log(item[tdItem]);
-        tr +=
-        //   `<td><input type="text" class="form-control" readonly placeholder="Product name" value=${item[tdItem].values}></td>`
-          `<td>${item[tdItem].values}</td>`;
-        
-      });
-      tr+='</tr>';
-      $("#table-sell tbody").append(tr);
-    });
-    $(".table-data-js").removeClass('d-none');
-  } else {
-    $(".table-data-js").addClass('d-none');
+  let rowLength = $("#table-sell tbody tr").length;
+  let tr = "<tr>";
 
+  if (arr && arr.length) {
+    let obj = {};
+    arr.forEach((item, index) => {
+      obj[item.name] = item.value;
+      tr += `<td data-value=${item.value} data-name=${item.name}>${item.value}</td>`;
+    });
+    tr += `<td data-value="button" class="d-flex justify-content-end" data-name="button" ><button class="btn btn-danger sell-0 btn-del"
+            data-rownum="${rowLength + 1}" id="sell-plus-btn-js"><i class="bi bi-x-circle"></i> </button></td>`;
+
+    tr += "</tr>";
+    $("#table-sell tbody").append(tr);
+    $(".table-data-js").removeClass("d-none");
+    mainArray.push(obj);
+  } else {
+    $(".table-data-js").addClass("d-none");
   }
 }
+
+$(document).ready(function (e) {
+  // Add and configure the validation for the form
+  $(".sell-form").validate({
+    //     errorClass: "is-invalid",
+    //   validClass: "is-valid",
+    errorElement: "div", // Change the error element to a div
+    errorClass: "is-invalid", // Bootstrap class for styling
+    errorPlacement: function (error, element) {
+      // Add Bootstrap classes for styling
+      error.addClass("invalid-feedback");
+      error.insertAfter(element); // Insert the error message after the input element
+    },
+    highlight: function (element, errorClass, validClass) {
+      // Add Bootstrap classes for styling to the input field
+      $(element).addClass("is-invalid").removeClass("is-valid");
+    },
+    unhighlight: function (element, errorClass, validClass) {
+      // Add Bootstrap classes for styling to the input field
+      $(element).removeClass("is-invalid").addClass("is-valid");
+    },
+  });
+
+  $(".sell-form").submit(function (e) {
+    e.preventDefault(e);
+    console.log($(this).valid());
+    if($(this).valid()) {
+      appendTableRow($(this).serializeArray());
+      $(this).find("input[type=text], textarea").val("");
+      $(this).find("input[type=text], textarea, select").removeClass("is-valid");
+    }
+  });
+});

@@ -1,4 +1,5 @@
 ﻿<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -18,62 +19,73 @@
 </head>
 <body>
 
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="main-container">
         <nav id="sidebar" class="sidebar-wrapper">
+
+            <!-- Sidebar profile starts -->
             <div class="sidebar-user-profile">
-                <img src="~/images/logo.jpg" class="profile-thumb rounded-circle p-2 d-lg-flex d-none"
-                     alt="Bootstrap Gallery" />
+                <img src="~/images/NoorFood.png" class="sidebar-logo  img-side" alt="" />
+
             </div>
+            <!-- Sidebar profile ends -->
+            <!-- Sidebar menu starts -->
             <div class="sidebarMenuScroll">
                 <ul class="sidebar-menu">
                     <li class="active current-page">
                         <a href="index.html">
                             <i class="bi bi-shop-window"></i>
-                            <span class="menu-text">Sell Details</span>
+                            <span class="menu-text">Sell </span>
+
                         </a>
                     </li>
+
+                    <li>
+                        @Html.ActionLink("Reports", "Report", "Product")
+                    </li>
+
+                    <li class="d-none">
+                        <a href="profile.html">
+                            <i class="bi bi-people-fill"></i>
+                            <span class="menu-text">Profile</span>
+                        </a>
+                    </li>
+
                     <li class="treeview">
-                        <a href="adduser.html">
+                        <a href="user.html">
                             <i class="bi bi-person-circle"></i>
                             <span class="menu-text">Admin</span>
                         </a>
                         <ul class="treeview-menu">
+                            <li>@Html.ActionLink("Users", "AddUser", "User")</li>
+                            <li>@Html.ActionLink("Products", "Product", "Product")</li>
+                            <li>@Html.ActionLink("Roles", "Roles", "Roles")</li>
                             <li>
-                                <a href="addUser.html">Add User</a>
-                            </li>
-                            <li>
-                                <a href="addProduct.html">Add Product</a>
-                            </li>
-                            <li>
-                                <a href="addPayment.html">Add Payment</a>
-                            </li>
-                            <li>
-                                <a href="addRole.html">Add Role</a>
+                                <a href="theme.html">Theme</a>
                             </li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="report.html">
-                            <i class="bi bi-card-checklist"></i>
-                            <span class="menu-text">Report</span>
+                    <li class="treeview">
+                        <a href="login.html">
+                            <i class="bi bi-upc-scan"></i>
+                            <span class="menu-text">Login/Signup</span>
                         </a>
-                    </li>
-                    <li>
-                        <a href="userInfo.html">
-                            <i class="bi bi-people-fill"></i>
-                            <span class="menu-text">User Info</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="contacts.html">
-                            <i class="bi bi-wallet2"></i>
-                            <span class="menu-text">XYZ</span>
-                        </a>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a href="login.html">Login</a>
+                            </li>
+                            <li>
+                                <a href="signup.html">Signup</a>
+                            </li>
+                            <li>
+                                <a href="forgetPassword.html">Forget Password</a>
+                            </li>
+
+                        </ul>
                     </li>
 
                 </ul>
             </div>
-
+            <!-- Sidebar menu ends -->
         </nav>
     </div>
 

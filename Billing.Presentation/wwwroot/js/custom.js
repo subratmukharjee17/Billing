@@ -46,7 +46,15 @@ $.sidebarMenu($(".sidebar-menu"));
 jQuery(function ($) {
 	//toggle sidebar
 	$("#toggle-sidebar").on("click", function () {
+		console.log($(this));
 		$(".page-wrapper").toggleClass("toggled");
+		if($(".page-wrapper").hasClass('toggled')) {
+			$(".toggle-sidebar #toggle-icon-btn").removeClass("bi-chevron-left").addClass("bi-chevron-right");
+
+		} else {
+			$(".toggle-sidebar #toggle-icon-btn").removeClass("bi-chevron-right").addClass("bi-chevron-left");
+		}
+
 	});
 
 	// Pin sidebar on click
@@ -55,8 +63,11 @@ jQuery(function ($) {
 			// unpin sidebar when hovered
 			$(".page-wrapper").removeClass("pinned");
 			$("#sidebar").unbind("hover");
+			$(".pin-sidebar #icon-btn").removeClass("bi-chevron-right").addClass("bi-chevron-left");
 		} else {
 			$(".page-wrapper").addClass("pinned");
+			$(".pin-sidebar #icon-btn").removeClass("bi-chevron-left").addClass("bi-chevron-right");
+
 			$("#sidebar").hover(
 				function () {
 					console.log("mouseenter");
@@ -97,6 +108,7 @@ jQuery(function ($) {
 			// When the width and height meet your specific requirements or lower
 			if ($(window).width() <= 768) {
 				$(".page-wrapper").removeClass("pinned");
+				
 			}
 		});
 		// When the window is resized,
@@ -104,6 +116,7 @@ jQuery(function ($) {
 			// When the width and height meet your specific requirements or lower
 			if ($(window).width() >= 768) {
 				$(".page-wrapper").removeClass("toggled");
+				
 			}
 		});
 	});
@@ -132,3 +145,28 @@ var popoverTriggerList = [].slice.call(
 var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
 	return new bootstrap.Popover(popoverTriggerEl);
 });
+
+var showSuccess = function (htmlMessage, type) {
+	var body = $('.message');
+	body.empty();
+	var html = `<div class="fade show d-flex align-items-center  alert alert-${type}" id="top-message">
+		${htmlMessage}
+	</div>`;
+	body.append(html).hide()
+	.fadeIn(1000);
+	setTimeout(()=>{
+		$(".alert").fadeOut(1000, function() { $(this).remove(); });
+	},4000);
+}
+
+function myFunction() {
+	let isLogout = confirm("Are you sure you want to log out?");
+	if(isLogout) {
+		window.location.href="/login.html";
+	}
+}
+
+
+
+
+
