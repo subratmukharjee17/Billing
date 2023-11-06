@@ -1,10 +1,8 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!-- App container starts -->
 <div class="app-container">
 
     <!-- App header starts -->
@@ -102,7 +100,7 @@
 
 
                         </form>
-                        <div class=" card-border p-2 mt-4">
+                        <div class=" card-border border-2 p-2 mt-4">
                             <div class="row">
                                 <div class="col-8 col-lg-3 ">
                                     <div class="d-flex">
@@ -130,7 +128,7 @@
                             <div class="d-flex justify-content-center table-data-js mt-3">
                                 <div class="table-responsive p-0 w-100">
                                     <table id="table-sell" class="table table-striped m-0">
-                                        <thead>
+                                        <thead class="table-primary" id="roleT">
                                             <tr>
                                                 <th style="font-weight: 600;">Role</th>
                                                 <th style="font-weight: 600;">Role Description</th>
@@ -145,6 +143,18 @@
                                             <tr>
                                                 <td>User</td>
                                                 <td>Read </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Admin-Main</td>
+                                                <td>Write and delete</td>
+                                            </tr>
+                                            <tr>
+                                                <td>User-Main</td>
+                                                <td>Read and Edit</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Admin-Shop</td>
+                                                <td>Creae Read Write Delete </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -191,3 +201,4 @@
 
 </div>
 <!-- App container ends -->
+<!-- App body ends -->

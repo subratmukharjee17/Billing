@@ -32,6 +32,7 @@ $.sidebarMenu = function (menu) {
 				checkElement.addClass("menu-open");
 				parent.find("li.active").removeClass("active");
 				parent_li.addClass("active");
+				$("li").removeClass("current-page");
 			});
 		}
 		//if this isn't a link, prevent the page from being redirected
@@ -123,11 +124,7 @@ jQuery(function ($) {
 });
 
 /***********
-***********
-***********
-	Bootstrap JS 
-***********
-***********
+Bootstrap JS 
 ***********/
 
 // Tooltip
@@ -165,6 +162,40 @@ function myFunction() {
 		window.location.href="/login.html";
 	}
 }
+
+	$(document).on("change","#themeselect", function () {
+		var target = $('head link#target');
+
+		if(this.value==1) {
+			target.attr("href", "assets/css/theme/default.css");
+		} else if(this.value==2) {
+			target.attr("href", "assets/css/theme/white-grey.css");
+
+		} else if(this.value==3) {
+			target.attr("href", "assets/css/theme/black-grey.css");
+
+		}
+		else if(this.value==4) {
+			target.attr("href", "assets/css/theme/black-blue.css");
+
+		}
+		else if(this.value==5) {
+			target.attr("href", "assets/css/theme/white-red.css");
+
+		}
+
+		localStorage.setItem("currenttheme",target.attr("href"));
+	})
+
+	$( document ).ready(function() {
+		let theme = localStorage.getItem("currenttheme");
+		if(theme !== null) {
+			$('head link#target').attr("href", theme);
+		}
+    });
+ 
+	
+	
 
 
 

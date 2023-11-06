@@ -19,14 +19,21 @@
 </head>
 <body>
 
-    <div class="main-container">
-        <nav id="sidebar" class="sidebar-wrapper">
+    <div class="message"></div>
+    <!-- Page wrapper start -->
+    <div class="page-wrapper">
 
-            <!-- Sidebar profile starts -->
-            <div class="sidebar-user-profile">
-                <img src="~/images/NoorFood.png" class="sidebar-logo  img-side" alt="" />
+        <!-- Main container start -->
+        <div class="main-container">
 
-            </div>
+            <!-- Sidebar wrapper start -->
+            <nav id="sidebar" class="sidebar-wrapper">
+
+                <!-- Sidebar profile starts -->
+                <div class="sidebar-user-profile">
+                    <img src="~/images/NoorFood.png" class="sidebar-logo  img-side" alt="" />
+
+                </div>
             <!-- Sidebar profile ends -->
             <!-- Sidebar menu starts -->
             <div class="sidebarMenuScroll">
@@ -97,10 +104,19 @@
         </footer>
     </div>
     @RenderSection("scripts", required: false)
-    <script src="~/js/jquery.min.js"></script>
-    <script src="~/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/custom.js"></script>
-    <script src="~/js/sell.js"></script>
+        <!-- Page wrapper end -->
+        <!-- *************
+            ************ JavaScript Files *************
+        ************* -->
+        <!-- Required jQuery first, then Bootstrap Bundle JS -->
+        <script src="~/js/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+        <script src="~/js/bootstrap.bundle.min.js"></script>
+
+
+        <!-- Custom JS files -->
+        <script src="~/js/custom.js"></script>
+        <script src="~/js/sell.js"></script>
 
 </body>
 </html>
