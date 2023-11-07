@@ -1,0 +1,138 @@
+
+// Custom Colors
+$sidebar-bg: #fff;
+$sidebar-hover-bg: #4d4dff;
+$sidebar-active-bg: #4d4dff;
+$sidebar-sub-bg: #4d4dff;
+$sidebar-color: #323232;
+$sidebar-active-color: #fff;
+$border-bg: #ffffff;
+
+// Bootstrap Theme Colors
+// Grey Variables
+$white: #fff !default;
+$gray-100: #edf1f7 !default;
+$gray-200: #ccd4de !default;
+$gray-300: #b4bcc7 !default;
+$gray-400: #989fa9 !default;
+$gray-500: #7a7e83 !default;
+$gray-600: #5c6066 !default;
+$gray-700: #4b4e53 !default;
+$gray-800: #2f3034 !default;
+$gray-900: #252528 !default;
+$black: #1a1a1d !default;
+
+// Color Variables
+$blue:    #4d4dff ;
+$indigo:  #6610f2 ;
+$purple:  #6f42c1 ;
+$pink:    #d63384 ;
+$red:     #dc3545 ;
+$orange:  #fd7e14 ;
+$yellow:  #ffc107 ;
+$green:   #198754 ;
+$teal:    #20c997 ;
+$cyan:    #0dcaf0 ;
+
+$primary:       $blue ;
+$secondary:     $gray-600 ;
+$success:       $green ;
+$info:          $cyan ;
+$warning:       $yellow ;
+$danger:        $red ;
+$light:         $gray-100 ;
+$dark:          $gray-900 ;
+
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "danger": $danger,
+  "success": $success,
+  "info": $info,
+  "warning": $warning,
+  "light": $light,
+  "dark": $dark,
+);
+$table-variants: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "danger": $danger,
+  "success": $success,
+  "info": $info,
+  "warning": $warning,
+  "light": $light,
+  "dark": $dark,
+) !default;
+
+// Font Size
+$font-size-base: 0.825rem !default;
+
+// Inputs
+$input-border-color: $gray-300;
+$input-color: $black;
+$input-group-addon-bg: $gray-100 !default;
+$input-disabled-bg: $gray-100 !default;
+$form-select-disabled-bg: $gray-100 !default;
+
+// Dropdowns
+$dropdown-link-hover-bg: $primary ;
+$dropdown-link-active-bg: #eaebf2;
+$dropdown-link-active-color: $gray-800;
+
+// Alert
+$alert-bg-scale: -95% !default;
+$alert-border-scale: -10% !default;
+$alert-color-scale: -60% !default;
+
+// Card
+$card-border-color: $gray-200;
+$card-cap-bg: $white;
+$card-cap-padding-y: 0.925rem;
+
+// Table
+$border-color: $card-border-color;
+
+// Modal
+$modal-backdrop-opacity: 0.7 !default;
+
+// Popover
+$popover-header-bg: $light;
+$popover-border-radius: 0.25rem;
+$popover-header-padding-y: 0.8rem !default;
+
+// Tooltips
+$tooltip-border-radius: 0.25rem;
+
+// Custom SCSS Mixins
+// Transition
+@mixin transition($transition-property, $transition-time, $method) {
+  -webkit-transition: $transition-property $transition-time $method;
+  -moz-transition: $transition-property $transition-time $method;
+  -ms-transition: $transition-property $transition-time $method;
+  -o-transition: $transition-property $transition-time $method;
+  transition: $transition-property $transition-time $method;
+}
+// Border Radius
+@mixin roundedCorners($size) {
+  -webkit-border-radius: $size + px;
+  -moz-border-radius: $size + px;
+  border-radius: $size + px;
+}
+@mixin roundedCornersAll($size1, $size2, $size3, $size4) {
+  -webkit-border-radius: $size1 $size2 $size3 $size4;
+  -moz-border-radius: $size1 $size2 $size3 $size4;
+  border-radius: $size1 $size2 $size3 $size4;
+}
+
+// Import Bootstrap
+@import "../bootstrap/bootstrap.scss";
+
+/********************
+ ********************
+// Bootstrap Overwrite CSS
+ ********************
+********************/
+@import './common.scss';
+
+
+

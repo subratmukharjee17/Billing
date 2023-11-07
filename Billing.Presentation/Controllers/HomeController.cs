@@ -22,7 +22,7 @@ namespace Billing.Presentation.Controllers
 
         public async Task<ActionResult> Index()
         {
-            //string apiUrl = "http://localhost:8080/api/Menu/GetAllMenus";
+            //string apiUrl = "http://localhost:36942/api/Menu/GetAllMenus";
             //User user = new User();
 
             //using (HttpClient client = new HttpClient())

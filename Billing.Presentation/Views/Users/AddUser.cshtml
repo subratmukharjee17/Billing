@@ -1,15 +1,13 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>Welcome</h2> 
+
 <!-- App container starts -->
 <div class="app-container">
-
+    <!-- App container starts -->
     <!-- App header starts -->
     <div class="app-header d-flex align-items-center">
-
         <!-- Toggle buttons start -->
         <div class="d-flex">
             <button class="btn btn-outline-primary me-2 toggle-sidebar" id="toggle-sidebar">
@@ -29,30 +27,25 @@
         <!-- App brand sm end -->
         <!-- App header actions start -->
         <div class="header-actions">
-            <div class="d-lg-block d-none me-2">
-            </div>
-
+            <div class="d-lg-block d-none me-2"></div>
             <div class="dropdown ms-3">
-                <a id="userSettings"
-                   class="dropdown-toggle d-flex py-2 align-items-center text-decoration-none" href="#!"
-                   role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a id="userSettings" class="dropdown-toggle d-flex py-2 align-items-center text-decoration-none"
+                   href="#!" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <span class="d-none d-md-block me-2">Noor Food</span>
-                    <img src="~/images/profile.avif" class="rounded-circle img-3x"
-                         alt="Bootstrap Gallery" />
+                    <img src="~/images/profile.avif" class="rounded-circle img-3x" alt="Gallery" />
                 </a>
                 <div class="dropdown-menu dropdown-menu-end shadow">
                     <a class="dropdown-item d-flex align-items-center" href="profile.html">
                         <i class="bi bi-person fs-4 me-2"></i>Profile
                     </a>
-
-                    <a class="dropdown-item d-flex align-items-center" href="https://snmatrix.com/noorfoodandagriculture/noorfood" onclick="myFunction()">
+                    <a class="dropdown-item d-flex align-items-center"
+                       href="https://snmatrix.com/noorfoodandagriculture/noorfood" onclick="myFunction()">
                         <i class="bi bi-escape fs-4 me-2"></i>Logout
                     </a>
                 </div>
             </div>
         </div>
         <!-- App header actions end -->
-
     </div>
     <!-- App header ends -->
     <!-- App hero header starts -->
@@ -62,6 +55,9 @@
     </div>
     <!-- App Hero header ends -->
     <!-- App body starts -->
+
+
+
     <div class="app-body h-100 mt-0">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
@@ -87,9 +83,9 @@
                     <div class="col-xxl-12">
                         <div class="card shadow mb-4">
                             <!-- <div class="card-header">
-                                <h4>User Details</h4>
+                                                    <h4>User Details</h4>
 
-                            </div> -->
+                                                </div> -->
                             <form method="GET" id="user" action="/index.html">
                                 <div class="card-body">
 
@@ -107,8 +103,8 @@
                                         <div class="col-lg-6  col-12">
                                             <div class="mb-3">
                                                 <label class="form-label">Last Name</label>
-                                                <input name="lname" required type="text"
-                                                       class="form-control" placeholder="Enter Last Name">
+                                                <input name="lname" required type="text" class="form-control"
+                                                       placeholder="Enter Last Name">
                                             </div>
                                         </div>
                                         <div class="col-lg-6  col-12">
@@ -123,8 +119,8 @@
                                         <div class="col-lg-6  col-12">
                                             <div class="mb-3">
                                                 <label class="form-label">Email</label>
-                                                <input type="email" required name="email"
-                                                       class="form-control" placeholder="Enter Email">
+                                                <input type="email" required name="email" class="form-control"
+                                                       placeholder="Enter Email">
 
                                             </div>
                                         </div>
@@ -153,14 +149,12 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-6  col-12">
-                                            <div class="mb-3 d-flex align-items-center h-100"
-                                                 style="gap:10px">
+                                            <div class="mb-3 d-flex align-items-center h-100" style="gap:10px">
                                                 <label class="form-label m-0">Gender</label>
 
                                                 <input type="radio" checked id="gender" name="gender"
                                                        value="male" /> Male
-                                                <input type="radio" id="gender" name="gender"
-                                                       value="female" />
+                                                <input type="radio" id="gender" name="gender" value="female" />
                                                 Female
 
                                             </div>
@@ -170,8 +164,7 @@
 
                                                 <label class="form-label">Confirm-Password</label>
                                                 <input type="password" required name="cPassword"
-                                                       class="form-control"
-                                                       placeholder="Enter confirm password">
+                                                       class="form-control" placeholder="Enter confirm password">
 
 
                                             </div>
@@ -180,16 +173,16 @@
                                         <div class="col-lg-6  col-12">
                                             <div class="mb-3">
                                                 <label class="form-label">Address1</label>
-                                                <input type="text" required name="address1"
-                                                       class="form-control" placeholder="Enter Address1">
+                                                <input type="text" required name="address1" class="form-control"
+                                                       placeholder="Enter Address1">
                                             </div>
                                         </div>
                                         <div class="col-lg-6  col-12">
                                             <div class="mb-3">
 
                                                 <label class="form-label">Address2</label>
-                                                <input type="text" required name="address2"
-                                                       class="form-control" placeholder="Enter Address2">
+                                                <input type="text" required name="address2" class="form-control"
+                                                       placeholder="Enter Address2">
 
 
                                             </div>
@@ -197,8 +190,8 @@
                                         <div class="col-lg-6  col-12">
                                             <div class="mb-3">
                                                 <label class="form-label">Landmark</label>
-                                                <input type="text" required name="landmark"
-                                                       class="form-control" placeholder="Enter landmark">
+                                                <input type="text" required name="landmark" class="form-control"
+                                                       placeholder="Enter landmark">
                                             </div>
                                         </div>
                                         <div class="col-lg-6  col-12">
@@ -211,22 +204,22 @@
                                         <div class="col-lg-6  col-12">
                                             <div class="mb-3">
                                                 <label class="form-label">State</label>
-                                                <input type="text" required name="state"
-                                                       class="form-control" placeholder="Enter state">
+                                                <input type="text" required name="state" class="form-control"
+                                                       placeholder="Enter state">
                                             </div>
                                         </div>
                                         <div class="col-lg-6  col-12">
                                             <div class="mb-3">
                                                 <label class="form-label">Zip Code</label>
-                                                <input type="number" required name="zip"
-                                                       class="form-control" placeholder="Enter zip code">
+                                                <input type="number" required name="zip" class="form-control"
+                                                       placeholder="Enter zip code">
                                             </div>
                                         </div>
                                         <div class="col-lg-6  col-12">
                                             <div class="mb-3">
                                                 <label class="form-label">Country</label>
-                                                <input type="text" required name="Country"
-                                                       class="form-control" placeholder="Enter Country">
+                                                <input type="text" required name="Country" class="form-control"
+                                                       placeholder="Enter Country">
                                             </div>
                                         </div>
 
@@ -260,16 +253,16 @@
                     <div class="col-xxl-12">
                         <div class="card shadow mb-4">
                             <!-- <div class="card-header">
-                                <h4>User Details</h4>
+                                    <h4>User Details</h4>
 
-                            </div> -->
+                                </div> -->
                             <form method="post" id="user" action="/user">
                                 <div class="card-body">
 
 
 
 
-                                    <div class=" card-border p-2 mt-4">
+                                    <div class=" card-border border-2 p-2 mt-4">
                                         <div class="row">
                                             <div class="col-8 col-lg-3 ">
                                                 <div class="d-flex">
@@ -299,7 +292,7 @@
                                             <!-- <hr> -->
                                             <div class="table-responsive p-0 w-100">
                                                 <table id="table-sell" class="table table-striped m-0">
-                                                    <thead>
+                                                    <thead class="table-primary">
                                                         <tr>
                                                             <th style="font-weight: 600;">Name</th>
                                                             <th style="font-weight: 600;">Address</th>
@@ -315,6 +308,34 @@
                                                             <td>New Delhi</td>
                                                             <td>9912345678</td>
                                                             <td>xyz@gmail.com</td>
+                                                            <td>23-10-2023</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Adhiraj</td>
+                                                            <td>Greater Noida</td>
+                                                            <td>9912344343</td>
+                                                            <td>adi@gmail.com</td>
+                                                            <td>13-09-2023</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Ridit</td>
+                                                            <td>Hyderabad</td>
+                                                            <td>9912345436</td>
+                                                            <td>ridit@gmail.com</td>
+                                                            <td>30-12-2023</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Sujit Mishra</td>
+                                                            <td>Madhya Pradesh</td>
+                                                            <td>9946725678</td>
+                                                            <td>sujit@gmail.com</td>
+                                                            <td>02-12-2023</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Badal</td>
+                                                            <td>Kolkata</td>
+                                                            <td>8877345678</td>
+                                                            <td>Badal@gmail.com</td>
                                                             <td>23-10-2023</td>
                                                         </tr>
 

@@ -19,88 +19,107 @@
 </head>
 <body>
 
-    <div class="main-container">
-        <nav id="sidebar" class="sidebar-wrapper">
+    <div class="message"></div>
+    <!-- Page wrapper start -->
+    <div class="page-wrapper">
 
-            <!-- Sidebar profile starts -->
-            <div class="sidebar-user-profile">
-                <img src="~/images/NoorFood.png" class="sidebar-logo  img-side" alt="" />
+        <!-- Main container start -->
+        <div class="main-container">
 
-            </div>
-            <!-- Sidebar profile ends -->
-            <!-- Sidebar menu starts -->
-            <div class="sidebarMenuScroll">
-                <ul class="sidebar-menu">
-                    <li class="active current-page">
-                        <a href="index.html">
-                            <i class="bi bi-shop-window"></i>
-                            <span class="menu-text">Sell </span>
+            <!-- Sidebar wrapper start -->
+            <nav id="sidebar" class="sidebar-wrapper">
 
-                        </a>
-                    </li>
+                <!-- Sidebar profile starts -->
+                <div class="sidebar-user-profile">
+                    <img src="~/images/NoorFood.png" class="sidebar-logo  img-side" alt="" />
 
-                    <li>
-                        @Html.ActionLink("Reports", "Report", "Product")
-                    </li>
+                </div>
+                <!-- Sidebar profile ends -->
+                <!-- Sidebar menu starts -->
+                <div class="sidebarMenuScroll">
+                    <ul class="sidebar-menu">
+                        <li class="active current-page">
+                            <a href="index.html">
+                                <i class="bi bi-shop-window"></i>
+                                <span class="menu-text">Sell </span>
 
-                    <li class="d-none">
-                        <a href="profile.html">
-                            <i class="bi bi-people-fill"></i>
-                            <span class="menu-text">Profile</span>
-                        </a>
-                    </li>
+                            </a>
+                        </li>
 
-                    <li class="treeview">
-                        <a href="user.html">
-                            <i class="bi bi-person-circle"></i>
-                            <span class="menu-text">Admin</span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li>@Html.ActionLink("Users", "AddUser", "User")</li>
-                            <li>@Html.ActionLink("Products", "Product", "Product")</li>
-                            <li>@Html.ActionLink("Roles", "Roles", "Roles")</li>
-                            <li>
-                                <a href="theme.html">Theme</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="login.html">
-                            <i class="bi bi-upc-scan"></i>
-                            <span class="menu-text">Login/Signup</span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li>
-                                <a href="login.html">Login</a>
-                            </li>
-                            <li>
-                                <a href="signup.html">Signup</a>
-                            </li>
-                            <li>
-                                <a href="forgetPassword.html">Forget Password</a>
-                            </li>
+                        <li>
+                            @Html.ActionLink("Reports", "Report", "Product")
+                        </li>
 
-                        </ul>
-                    </li>
+                        <li class="d-none">
+                            <a href="profile.html">
+                                <i class="bi bi-people-fill"></i>
+                                <span class="menu-text">Profile</span>
+                            </a>
+                        </li>
 
-                </ul>
-            </div>
-            <!-- Sidebar menu ends -->
-        </nav>
-    </div>
+                        <li class="treeview">
+                            <a href="user.html">
+                                <i class="bi bi-person-circle"></i>
+                                <span class="menu-text">Admin</span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li>@Html.ActionLink("Users", "AddUser", "User")</li>
+                                <li>@Html.ActionLink("Products", "Product", "Product")</li>
+                                <li>@Html.ActionLink("Roles", "Roles", "Roles")</li>
+                                <li>
+                                    <a href="theme.html">Theme</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="login.html">
+                                <i class="bi bi-upc-scan"></i>
+                                <span class="menu-text">Login/Signup</span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li>
+                                    <a href="login.html">Login</a>
+                                </li>
+                                <li>
+                                    <a href="signup.html">Signup</a>
+                                </li>
+                                <li>
+                                    <a href="forgetPassword.html">Forget Password</a>
+                                </li>
 
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
-    @RenderSection("scripts", required: false)
-    <script src="~/js/jquery.min.js"></script>
-    <script src="~/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/custom.js"></script>
-    <script src="~/js/sell.js"></script>
+                            </ul>
+                        </li>
 
+                    </ul>
+                </div>
+                <!-- Sidebar menu ends -->
+            </nav>
+        </div>
+
+        <div class="container body-content" style="margin-right:0">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            </footer>
+
+        </div>
+        @RenderSection("scripts", required: false)
+        <!-- Page wrapper end -->
+        <!-- *************
+            ************ JavaScript Files *************
+        ************* -->
+        <!-- Required jQuery first, then Bootstrap Bundle JS -->
+        <script src="~/js/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+        <script src="~/js/bootstrap.bundle.min.js"></script>
+
+
+        <!-- Custom JS files -->
+        <script src="~/js/custom.js"></script>
+        <script src="~/js/sell.js"></script>
+        <div class="app-footer position-fixed bottom-0  w-100 " style="background-color: #e9edf2;">
+            <h6>© Snmatrix 2023</h6>
+        </div>
 </body>
 </html>
