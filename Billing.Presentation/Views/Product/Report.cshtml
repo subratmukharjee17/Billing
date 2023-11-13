@@ -1,8 +1,8 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 
 <!-- App container starts -->
 <div class="app-container">
@@ -23,7 +23,7 @@
         <!-- App brand sm start -->
         <div class="app-brand-sm d-md-none d-sm-block">
             <a href="index.html">
-                <img src="~/images/NoorFood.png" class="logo" alt="img-logo">
+                <img src="assets/images/NoorFood.png" class="logo" alt="img-logo">
             </a>
         </div>
         <!-- App brand sm end -->
@@ -37,7 +37,7 @@
                    class="dropdown-toggle d-flex py-2 align-items-center text-decoration-none" href="#!"
                    role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <span class="d-none d-md-block me-2">Noor Food</span>
-                    <img src="~/images/profile.avif" class="rounded-circle img-3x"
+                    <img src="assets/images/profile.avif" class="rounded-circle img-3x"
                          alt="Bootstrap Gallery" />
                 </a>
                 <div class="dropdown-menu dropdown-menu-end shadow">
@@ -117,7 +117,7 @@
 
 
 
-                            <div class=" card-border p-2 mt-4">
+                            <div class=" card-border border-2 p-2 mt-4">
                                 <div class="row">
                                     <div class="col-8 col-lg-3 ">
                                         <div class="d-flex">
@@ -146,7 +146,7 @@
                                     <!-- <hr> -->
                                     <div class="table-responsive p-0 w-100">
                                         <table id="table-sell" class="table table-striped m-0">
-                                            <thead>
+                                            <thead class="table-primary">
                                                 <tr>
                                                     <th style="font-weight: 600;">Product Name</th>
                                                     <th style="font-weight: 600;">Weight</th>
@@ -155,6 +155,37 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                <tr>
+                                                    <td>Big Broiler</td>
+                                                    <td>2.234</td>
+                                                    <td>200</td>
+                                                    <td>450</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Small Broiler</td>
+                                                    <td>1.234</td>
+                                                    <td>300</td>
+                                                    <td>350</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Boneless</td>
+                                                    <td>1.000</td>
+                                                    <td>400</td>
+                                                    <td>400</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Layer Chicken</td>
+                                                    <td>3.500</td>
+                                                    <td>200</td>
+                                                    <td>700</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Goat Meat</td>
+                                                    <td>2.000</td>
+                                                    <td>1200</td>
+                                                    <td>2400</td>
+                                                </tr>
+
                                             </tbody>
                                         </table>
 
@@ -205,4 +236,3 @@
     <!-- App container ends -->
 
 </div>
-<!-- Main container end -->
