@@ -15,14 +15,14 @@
     <meta property="og:description" content="Marketplace for Bootstrap Admin Dashboards">
     <meta property="og:type" content="Website">
     <meta property="og:site_name" content="Bootstrap Gallery">
-    <link rel="shortcut icon" href="assets/images/favicon.ico" />
+    <link rel="shortcut icon" href="~/images/favicon.ico" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="~/css/main.css" />
 
 
 
     <!-- Scrollbar CSS -->
-    <!-- <link rel="stylesheet" href="assets/vendor/overlay-scroll/OverlayScrollbars.min.css" /> -->
+    <!-- <link rel="stylesheet" href="~/vendor/overlay-scroll/OverlayScrollbars.min.css" /> -->
 </head>
 
 <body>
@@ -37,7 +37,7 @@
 
                 <!-- Sidebar profile starts -->
                 <div class="sidebar-user-profile">
-                    <img src="assets/images/NoorFood.png" class="sidebar-logo  img-side" alt="" />
+                    <img src="~/images/NoorFood.png" class="sidebar-logo  img-side" alt="" />
 
                 </div>
                 <!-- Sidebar profile ends -->
@@ -129,7 +129,7 @@
                     <!-- App brand sm start -->
                     <div class="app-brand-sm d-md-none d-sm-block">
                         <a href="index.html">
-                            <img src="assets/images/NoorFood.png" class="logo" alt="img-logo">
+                            <img src="~/images/NoorFood.png" class="logo" alt="img-logo">
                         </a>
                     </div>
                     <!-- App brand sm end -->
@@ -143,7 +143,7 @@
                                class="dropdown-toggle d-flex py-2 align-items-center text-decoration-none" href="#!"
                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <span class="d-none d-md-block me-2">Noor Food</span>
-                                <img src="assets/images/profile.avif" class="rounded-circle img-3x"
+                                <img src="~/images/profile.avif" class="rounded-circle img-3x"
                                      alt="Bootstrap Gallery" />
                             </a>
                             <div class="dropdown-menu dropdown-menu-end shadow">
@@ -181,24 +181,26 @@
                                         <div class="col-lg-3  col-12">
                                             <div class="mb-3">
                                                 <label class="form-label">From Date</label>
-                                                <input type="date" class="form-control" placeholder="Enter Date">
+                                                <input id="FromDate" type="date" class="form-control" placeholder="Enter Date">
 
                                             </div>
                                         </div>
                                         <div class="col-lg-3  col-12">
                                             <div class="mb-3">
                                                 <label class="form-label">To Date</label>
-                                                <input type="date" class="form-control" placeholder="Enter date">
+                                                <input id="ToDate" type="date" class="form-control" placeholder="Enter date">
                                             </div>
                                         </div>
                                         <div class="col-lg-3  col-12">
                                             <div class="mb-3">
 
                                                 <label class="form-label">Report By</label>
-                                                <select class="form-select">
-                                                    <option value="0">Weekly</option>
-                                                    <option value="1">Monthly</option>
-                                                    <option value="2">Daily</option>
+                                                <select class="form-select" id="DateRange">
+                                                    <option value="-1">-Select</option>
+                                                    <option value="0">Daily</option>
+                                                    <option value="1">Weekly</option>
+                                                    <option value="2">Monthly</option>
+                                                    <option value="3">yearly</option>
                                                 </select>
 
                                             </div>
@@ -254,7 +256,7 @@
                                                         </tbody>
                                                     </table>
 
-                                                    <nav aria-label="Page navigation example">
+                                                   @* <nav aria-label="Page navigation example">
                                                         <ul class="pagination justify-content-end mt-3 fw-bold">
                                                             <li class="page-item">
                                                                 <a class="page-link"
@@ -273,7 +275,7 @@
                                                                 <a class="page-link" href="#">Next</a>
                                                             </li>
                                                         </ul>
-                                                    </nav>
+                                                    </nav>*@
                                                 </div>
 
                                             </div>
@@ -309,15 +311,54 @@
             ************ JavaScript Files *************
         ************* -->
         <!-- Required jQuery first, then Bootstrap Bundle JS -->
-        <script src="assets/js/jquery.min.js"></script>
-        <script src="assets/js/bootstrap.bundle.min.js"></script>
-
-        <!-- Overlay Scroll JS -->
-        <!-- <script src="assets/vendor/overlay-scroll/jquery.overlayScrollbars.min.js"></script>
-        <script src="assets/vendor/overlay-scroll/custom-scrollbar.js"></script> -->
+        <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+        <script src="~/js/bootstrap.bundle.min.js"></script>
         <!-- Custom JS files -->
-        <script src="assets/js/custom.js"></script>
-        <script src="assets/js/report.js"></script>
+        <script src="~/js/custom.js"></script>
+        <script src="~/js/sell.js"></script>
+        <script>
+            //$(document).ready(function () {
+            $(document).on("click", ".btn-save-table-data", function (e) {
+                debugger;
+                var startDate = $('#FromDate').val(); // Get the start date from an input field
+                var endDate = $('#ToDate').val();
+                var dateRange = $('#DateRange').val();
+                $.ajax({
+                    type: 'GET',
+                    url: '/Home/GetSalesReport',
+                    data: {
+                    startDate: startDate,
+                    endDate: endDate,
+                    dateRange: dateRange
+                },
+                    success: function (response) {
+                        debugger;
+                        $('#dataTable').DataTable({
+                            data: response, // Use the response data to populate the DataTable
+                            columns: [
+                                { data: 'Product Name' }, // Define columns as per your API response structure
+                                { data: 'Weight' },
+                                { data: 'Rate' },
+                                { data: 'Amount' },
+
+                                // Add other columns as necessary
+                            ]
+                        });
+                    },
+                    error: function (error) {
+                        // Handle errors
+                        console.log(error);
+                    }
+                });
+                //});
+
+                //$(document).on("click", ".btn-save-table-data", function (e) {
+                //	debugger;
+                //	$('#Sale').submit(); // Trigger the form submission when the button is clicked
+                //});
+            });
+        </script>
 </body>
 
 </html>

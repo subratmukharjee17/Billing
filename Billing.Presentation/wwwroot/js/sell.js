@@ -1,4 +1,4 @@
-let mainArray = [];
+
 $(document).on("click", ".btn-del", function (e) {
   $(this).closest("tr").remove();
   if ($("#table-sell tbody tr").length) {
@@ -10,21 +10,22 @@ $(document).on("click", ".btn-del", function (e) {
   }
 });
 
-$(document).on("click", ".btn-save-table-data", function (e) {
-  if(mainArray && mainArray.length) {
-    localStorage.setItem('tableData',JSON.stringify(mainArray));
-    showSuccess(`<div class="" >
-   Saved successfully.
-  </div>`,'success')
-  } else {
-    showSuccess(`<div class="" >
-   Error, Please try again!
-   </div>`,'danger');
-  }
+//$(document).on("click", ".btn-save-table-data", function (e) {
+//    debugger;
+//  if(mainArray && mainArray.length) {
+//    localStorage.setItem('tableData',JSON.stringify(mainArray));
+//    showSuccess(`<div class="" >
+//   Saved successfully.
+//  </div>`,'success')
+//  } else {
+//    showSuccess(`<div class="" >
+//   Error, Please try again!
+//   </div>`,'danger');
+//  }
 
   
-  console.log(mainArray);
-});
+//  console.log(mainArray);
+//});
 
 function appendTableRow(arr) {
   let rowLength = $("#table-sell tbody tr").length;
@@ -48,27 +49,27 @@ function appendTableRow(arr) {
   }
 }
 
-$(document).ready(function (e) {
-  // Add and configure the validation for the form
-  $(".sell-form").validate({
-    //     errorClass: "is-invalid",
-    //   validClass: "is-valid",
-    errorElement: "div", // Change the error element to a div
-    errorClass: "is-invalid", // Bootstrap class for styling
-    errorPlacement: function (error, element) {
-      // Add Bootstrap classes for styling
-      error.addClass("invalid-feedback");
-      error.insertAfter(element); // Insert the error message after the input element
-    },
-    highlight: function (element, errorClass, validClass) {
-      // Add Bootstrap classes for styling to the input field
-      $(element).addClass("is-invalid").removeClass("is-valid");
-    },
-    unhighlight: function (element, errorClass, validClass) {
-      // Add Bootstrap classes for styling to the input field
-      $(element).removeClass("is-invalid").addClass("is-valid");
-    },
-  });
+//$(document).ready(function (e) {
+//  // Add and configure the validation for the form
+//  //$(".sell-form").validate({
+//  //  //     errorClass: "is-invalid",
+//  //  //   validClass: "is-valid",
+//  //  errorElement: "div", // Change the error element to a div
+//  //  errorClass: "is-invalid", // Bootstrap class for styling
+//  //  errorPlacement: function (error, element) {
+//  //    // Add Bootstrap classes for styling
+//  //    error.addClass("invalid-feedback");
+//  //    error.insertAfter(element); // Insert the error message after the input element
+//  //  },
+//  //  highlight: function (element, errorClass, validClass) {
+//  //    // Add Bootstrap classes for styling to the input field
+//  //    $(element).addClass("is-invalid").removeClass("is-valid");
+//  //  },
+//  //  unhighlight: function (element, errorClass, validClass) {
+//  //    // Add Bootstrap classes for styling to the input field
+//  //    $(element).removeClass("is-invalid").addClass("is-valid");
+//  //  },
+//  });
 
   $(".sell-form").submit(function (e) {
     e.preventDefault(e);
@@ -79,4 +80,4 @@ $(document).ready(function (e) {
       $(this).find("input[type=text], textarea, select").removeClass("is-valid");
     }
   });
-});
+//});

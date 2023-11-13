@@ -130,7 +130,7 @@
                         </div>
                         <hr class="mt-4">
                         <div class="">
-                            <form action="#" method="post" novalidate class="sell-form">
+                            <form action="#" method="post" id="Sale" novalidate class="sell-form">
                                 <div class="d-flex flex-column flex-lg-row" style="gap: 8px;">
                                     <div class="d-flex flex-column w-100 js-row">
                                         <div class="mb-2 sellFontWeight">Product Name</div>
@@ -256,3 +256,34 @@
     <!-- App container ends -->
 
 </div>
+
+<script src="~/js/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+<script src="~/js/bootstrap.bundle.min.js"></script>
+<!-- Custom JS files -->
+<script src="~/js/custom.js"></script>
+<script src="~/js/sell.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $('#Sale').submit(function (event) {
+            debugger;
+            event.preventDefault(); // Prevent the default form submission
+            var formData = $(this).serialize(); // Get the form data
+
+            $.ajax({
+                type: 'POST',
+                url: '/HomeController/AddSale', // Update this URL with your controller's URL
+                data: formData,
+                success: function (response) {
+                    // Handle the success response here
+                    console.log(response);
+                },
+                error: function (error) {
+                    // Handle errors
+                    console.log(error);
+                }
+            });
+        });
+    });
+</script>
