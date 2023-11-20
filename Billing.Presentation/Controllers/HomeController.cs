@@ -8,39 +8,36 @@ using System.Net.Http;
 using System.Xml.Linq;
 using System.Net;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authentication;
+using static System.Net.Mime.MediaTypeNames;
+using System.Text.Json;
+using System.Security.Claims;
 
 namespace Billing.Presentation.Controllers
 {
     public class HomeController : Controller
     {
+        Uri baseAddress = new Uri("http://localhost:36942/api");
+        private readonly HttpClient _httpClient;
         private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+            _httpClient = new HttpClient();
+            _httpClient.BaseAddress = baseAddress;
         }
 
         public async Task<ActionResult> Index()
         {
-            //string apiUrl = "http://localhost:36942/api/Menu/GetAllMenus";
-            //User user = new User();
+            string apiUrl = "http://localhost:36942/api/Menu/GetAllMenus";
+            List<MainMenu> menu = new List<MainMenu>();
 
-            //using (HttpClient client = new HttpClient())
-            //{
-            //    client.BaseAddress = new Uri(apiUrl);
-            //    client.DefaultRequestHeaders.Accept.Clear();
-            //    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
-            //    HttpResponseMessage response = await client.GetAsync(apiUrl);
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        var data = await response.Content.ReadAsStringAsync();
-            //        var table = Newtonsoft.Json.JsonConvert.DeserializeObject<System.Data.DataTable>(data);
-            //    }
-
-
-            //}
-
+            HttpResponseMessage response = await _httpClient.GetAsync(apiUrl);
+            var responseContent = await response.Content.ReadAsStringAsync();
+            if (responseContent is not null)
+                menu = (List<MainMenu>)Newtonsoft.Json.JsonConvert.DeserializeObject(responseContent, typeof(List<MainMenu>));
+            ViewData["MyData"] = menu;
             return View();
         }
 
@@ -55,7 +52,7 @@ namespace Billing.Presentation.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        
+
 
         public IActionResult Sales()
         {
@@ -142,7 +139,7 @@ namespace Billing.Presentation.Controllers
                 var json = JsonConvert.SerializeObject(salesDto);
                 var data = new StringContent(json, Encoding.UTF8, "application/json");
 
-              
+
 
 
                 ///////////////
@@ -185,7 +182,7 @@ namespace Billing.Presentation.Controllers
                 //    return View("Error");
                 //}
             }
-            
+
             catch (Exception ex)
             {
                 // Handle exception

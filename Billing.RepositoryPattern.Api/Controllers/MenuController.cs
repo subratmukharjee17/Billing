@@ -18,7 +18,7 @@ namespace Billing.RepositoryPattern.Api.Controllers
         }
 
         [HttpGet("GetAllMenus")]
-        public async Task<IEnumerable<MainMenuEntity>> GetAll()
+        public async Task<ICollection<MainMenuEntity>> GetAll()
           => await _menuService.GetAll();
 
 

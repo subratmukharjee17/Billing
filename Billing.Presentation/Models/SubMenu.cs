@@ -11,5 +11,7 @@ namespace Billing.Presentation.Models
         public string? ActionName { get; set; }
         public int MainMenuId { get; set; }
         public int RoleId { get; set; }
+        public int? SubMenuSortOrder { get; set; }
+        public bool HideFlag { get; set; }
     }
 }

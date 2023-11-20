@@ -16,8 +16,9 @@ namespace Billing.RepositoryPattern.Api.Services.UserService
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IEnumerable<MainMenuEntity>> GetAll()
-            => await _unitOfWork.MainRepository.GetAllAsync();
+
+        public async Task<ICollection<MainMenuEntity>> GetAll()
+           => await _unitOfWork.MainRepository.GetAll();
 
         public async Task<IEnumerable<SubMenuEntity>> GetAllSubMenusByMenuId(int MainMenuId, int RoleId)
             => await _unitOfWork.SubMenuRepository.GetAllSubMenusByMenuId(MainMenuId, RoleId);

@@ -4,7 +4,7 @@ namespace Billing.Presentation.Controllers
 {
     public class ProductController : Controller
     {
-        public IActionResult Product()
+        public IActionResult AddProduct()
         {
             return View();
         }

@@ -7,7 +7,7 @@ namespace Billing.RepositoryPattern.Api.Services.UserService
 {
     public interface IMenuService
     {
-        public Task<IEnumerable<MainMenuEntity>> GetAll();
+        public Task<ICollection<MainMenuEntity>> GetAll();
         public Task<IEnumerable<SubMenuEntity>> GetAllSubMenusByMenuId(int mainMenuId, int roleId);
     }
 }
