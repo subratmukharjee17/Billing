@@ -2,7 +2,7 @@
 
 namespace Billing.RepositoryPattern.Domain.Interfaces
 {
-    public interface IRoleRepository : IGenericRepository<RoleEntity>
+    public interface IRoleRepository : IGenericRepository<RolesEntity>
     {
     }
 }

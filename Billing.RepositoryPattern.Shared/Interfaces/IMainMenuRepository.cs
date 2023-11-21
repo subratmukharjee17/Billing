@@ -6,5 +6,6 @@ namespace Billing.RepositoryPattern.Domain.Interfaces
 {
     public interface IMainMenuRepository : IGenericRepository<MainMenuEntity>
     {
+        Task<ICollection<MainMenuEntity>> GetAll();
     }
 }

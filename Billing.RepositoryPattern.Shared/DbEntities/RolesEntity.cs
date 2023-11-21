@@ -6,7 +6,7 @@ using System.ComponentModel;
 namespace Billing.RepositoryPattern.Domain.DbEntities
 {
     [Table("Roles", Schema = "Admin")]
-    public class RoleEntity
+    public class RolesEntity
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("RoleId")]

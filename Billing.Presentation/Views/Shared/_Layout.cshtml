@@ -1,4 +1,13 @@
-﻿<!DOCTYPE html>
+﻿@{
+    @model IEnumerable<Billing.Presentation.Models.MainMenu>
+
+    ViewData["Title"] = "Home Page";
+}
+@{
+    var categories = (List<Billing.Presentation.Models.MainMenu>)ViewData["MyData"]; // Cast the list
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -35,8 +44,18 @@
 
                 </div>
                 <!-- Sidebar profile ends -->
+                @foreach (var item in categories)
+                {
+                    <span>@item.MainMenuName</span>
+                    @foreach (var item1 in @item?.SubMenuList)
+                    {
+                        <span>@item1.SubMenuName</span>
+                    }
+                }
+
                 <!-- Sidebar menu starts -->
                 <div class="sidebarMenuScroll">
+
                     <ul class="sidebar-menu">
                         <li class="active current-page">
                             <a href="index.html">

@@ -24,7 +24,7 @@ namespace Billing.RepositoryPattern.Domain.DbEntities
         public virtual AddressEntity Address { get; set; }
         [ForeignKey("RoleId")]
         public int RoleId { get; set; }
-        public virtual RoleEntity Roles { get; set; }
+        public virtual RolesEntity Roles { get; set; }
         public bool IsActive { get; set; }
         public bool IsAuthenticated { get; set; }
         [ForeignKey("AuditId")]

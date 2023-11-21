@@ -17,11 +17,13 @@ namespace Billing.RepositoryPattern.Domain.DbEntities
         public string ControllerName { get; set; }
         [Required(ErrorMessage = "Action name is required")]
         public string ActionName { get; set; }
+        public int? SubMenuSortOrder { get; set; }
+        public bool HideFlag { get; set; }
         [ForeignKey("MainMenuId")]
         public int MainMenuId { get; set; }
         public virtual MainMenuEntity MainMenu { get; set; }
         [ForeignKey("RoleId")]
         public int RoleId { get; set; }
-        public virtual RoleEntity Role { get; set; }
+        public virtual RolesEntity Roles { get; set; }
     }
 }
