@@ -36,8 +36,7 @@
                    class="dropdown-toggle d-flex py-2 align-items-center text-decoration-none" href="#!"
                    role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <span class="d-none d-md-block me-2">Noor Food</span>
-                    <img src="~/images/profile.avif" class="rounded-circle img-3x"
-                         alt="Bootstrap Gallery" />
+                   @* <img src="~/images/profile.avif" class="rounded-circle img-3x" alt="Bootstrap Gallery" />*@
                 </a>
                 <div class="dropdown-menu dropdown-menu-end shadow">
                     <a class="dropdown-item d-flex align-items-center" href="profile.html">
@@ -131,7 +130,9 @@
                         </div>
                         <hr class="mt-4">
                         <div class="">
-                            <form action="#" method="post" novalidate class="sell-form">
+                            <form action="#" method="post" id="Sale" novalidate class="sell-form">
+
+                              
                                 <div class="d-flex flex-column flex-lg-row" style="gap: 8px;">
                                     <div class="d-flex flex-column w-100 js-row">
                                         <div class="mb-2 sellFontWeight">Product Name</div>
@@ -178,7 +179,7 @@
                                     <div class="d-flex flex-column w-100 js-row">
                                         <div class="mb-2 sellFontWeight">Rate(Per KG)</div>
                                         <div>
-                                            <input required type="text" placeholder="Rate(per kg)" name="rate"
+                                            <input required type="text" placeholder="Rate" name="rate"
                                                    class="form-control">
                                         </div>
 
@@ -210,14 +211,14 @@
 
                         <div class="row   mt-2  d-flex justify-content-center px-3  d-none table-data-js">
                             <hr>
-                            <div class="table-responsive p-0 card-border border-2 p-2 mt-4">
+                            <div class="table-responsive p-0 card-border p-2 mt-4">
                                 <table id="table-sell" class="table table-striped m-0">
-                                    <thead class="table-primary">
+                                    <thead>
                                         <tr>
                                             <th>Product Name</th>
                                             <th>Weight</th>
                                             <th>Rate</th>
-                                            <th colspan="2">Amount</th>
+                                            <th>Amount</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -248,14 +249,46 @@
         <!-- App body ends -->
 
 
-
-
     </div>
     <!-- App footer start -->
+    <div class="app-footer position-fixed bottom-0  w-100 " style="background-color: #e9edf2;">
+        <h6>© Snmatrix 2023</h6>
+    </div>
     <!-- App footer end -->
     <!-- App container ends -->
 
 </div>
+<script src="~/js/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+<script src="~/js/bootstrap.bundle.min.js"></script>
+
+
+<!-- Custom JS files -->
+<script src="~/js/custom.js"></script>
+<script src="~/js/sell.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $('#Sale').submit(function (event) {
+            debugger;
+            event.preventDefault(); // Prevent the default form submission
+            var formData = $(this).serialize(); // Get the form data
 
 
 
+            $.ajax({
+                type: 'POST',
+                url: '/HomeController/AddSale', // Update this URL with your controller's URL
+                data: formData,
+                success: function (response) {
+                    // Handle the success response here
+                    console.log(response);
+                },
+                error: function (error) {
+                    // Handle errors
+                    console.log(error);
+                }
+            });
+        });
+    });
+</script>

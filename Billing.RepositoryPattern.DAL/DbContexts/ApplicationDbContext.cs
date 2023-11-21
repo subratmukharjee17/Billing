@@ -40,5 +40,16 @@ namespace Billing.RepositoryPattern.InfraStructure
             get;
             set;
         }
+        public DbSet<ProductsEntity> Product
+        {
+            get;
+            set;
+        }
+        public DbSet<BillingInfoEntity> BillingInfo
+        {
+            get;
+            set;
+        }
+       
     }
 }

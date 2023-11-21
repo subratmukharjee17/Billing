@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using Billing.RepositoryPattern.InfraStructure.UnitOfWork;
 using System.Linq;
 using System;
+using Billing.RepositoryPattern.InfraStructure.Repositories;
 
 namespace Billing.RepositoryPattern.Api.Services.SalesService
 {
-    public class SalesService : ISalesService
+    public class SalesService :ISalesService
     {
         public IUnitOfWork _unitOfWork;
         public SalesService(IUnitOfWork unitOfWork)
@@ -22,14 +23,11 @@ namespace Billing.RepositoryPattern.Api.Services.SalesService
 
             var sales = new SalesDetailsEntity
             {
-                BillNo = salesDto.BillNo,
-                SaleDate=DateTime.Now,
-                CustomerName = salesDto.CustomerName,
-                CustomerPhNo = salesDto.CustomerPhNo,
-                CustomerAddress = salesDto.CustomerAddress,
-                ProductName = salesDto.ProductName,
-                ProductWeight = salesDto.ProductWeight,
-                ProductRate = salesDto.ProductRate,
+                SalesId=salesDto.SalesId,
+                SaleDate=salesDto.SaleDate,
+                BillingId = salesDto.BillingId,
+                ProductId = salesDto.ProductId,
+                Quantity = salesDto.Quantity,
                 Amount = salesDto.Amount
 
             };

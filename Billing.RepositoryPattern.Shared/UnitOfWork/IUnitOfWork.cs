@@ -9,8 +9,9 @@ namespace Billing.RepositoryPattern.Domain.UnitOfWork
         IAddressRepository AddressRepository { get; }
         IMainMenuRepository MainRepository { get; }
         ISubMenuRepository SubMenuRepository { get; }
-
         ISalesDetailsRepository SalesDetailsRepository { get; }
+        IProductRepository ProductRepository { get; }
+        IBillingInfoRepository BillingInfoRepository { get; }
         void Commit();
         void Rollback();
         Task CommitAsync();

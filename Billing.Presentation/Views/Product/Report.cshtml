@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<SalesDetails>;
+@{
     ViewData["Title"] = "Home Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -23,7 +24,7 @@
         <!-- App brand sm start -->
         <div class="app-brand-sm d-md-none d-sm-block">
             <a href="index.html">
-                <img src="assets/images/NoorFood.png" class="logo" alt="img-logo">
+                <img src="~/images/NoorFood.png" class="logo" alt="img-logo">
             </a>
         </div>
         <!-- App brand sm end -->
@@ -37,8 +38,8 @@
                    class="dropdown-toggle d-flex py-2 align-items-center text-decoration-none" href="#!"
                    role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <span class="d-none d-md-block me-2">Noor Food</span>
-                    <img src="assets/images/profile.avif" class="rounded-circle img-3x"
-                         alt="Bootstrap Gallery" />
+                   @* <img src="~/images/profile.avif" class="rounded-circle img-3x"
+                         alt="Bootstrap Gallery" />*@
                 </a>
                 <div class="dropdown-menu dropdown-menu-end shadow">
                     <a class="dropdown-item d-flex align-items-center" href="profile.html">
@@ -71,31 +72,25 @@
 
                     </div>
                     <div class="card-body">
-
-
-
-
-
-
                         <div class="row">
                             <div class="col-lg-3  col-12">
                                 <div class="mb-3">
                                     <label class="form-label">From Date</label>
-                                    <input type="date" class="form-control" placeholder="Enter Date">
+                                    <input type="date" class="form-control" placeholder="Enter Date" id="FromDate">
 
                                 </div>
                             </div>
                             <div class="col-lg-3  col-12">
                                 <div class="mb-3">
                                     <label class="form-label">To Date</label>
-                                    <input type="date" class="form-control" placeholder="Enter date">
+                                    <input type="date" class="form-control" placeholder="Enter date" id="ToDate">
                                 </div>
                             </div>
                             <div class="col-lg-3  col-12">
                                 <div class="mb-3">
 
                                     <label class="form-label">Report By</label>
-                                    <select class="form-select">
+                                    <select class="form-select" id="ReportBy">
                                         <option value="0">Weekly</option>
                                         <option value="1">Monthly</option>
                                         <option value="2">Daily</option>
@@ -106,35 +101,31 @@
 
                             <div class="col-lg-2 col-12 ">
                                 <div class="d-flex justify-content-end mt-4 ">
-                                    <button type="button"
-                                            class="btn btn-primary btn-lg px-4 btn-save-table-data w-100 w-lg-75">
+                                    <button type="button" id="SearchBtn" class="btn btn-primary btn-lg px-4 btn-save-table-data w-100 w-lg-75">
                                         Search
                                     </button>
 
                                 </div>
                             </div>
 
-
-
-
                             <div class=" card-border border-2 p-2 mt-4">
                                 <div class="row">
-                                    <div class="col-8 col-lg-3 ">
+                                   @* <div class="col-8 col-lg-3 ">
                                         <div class="d-flex">
                                             <input type="text" class="form-control" placeholder="Search">
                                             <button class="btn btn-primary" type="button">
                                                 <i class="bi bi-search fs-5"></i>
                                             </button>
                                         </div>
-                                    </div>
+                                    </div>*@
 
                                     <div class="col-4 col-lg-9">
                                         <div class="d-flex align-items-center justify-content-end">
-                                            <a title="PDF" class="px-1" href="#">
+                                            <a title="PDF" class="px-1" href="#" id="pdfLink">
                                                 <i class="bi bi-file-pdf-fill"
                                                    style="color:red; font-size: 24px"></i>
                                             </a>
-                                            <a title="EXCEL" href="#">
+                                            <a title="EXCEL" href="#" id="ExcelLink">
                                                 <i class="bi bi-file-earmark-spreadsheet-fill"
                                                    style="color:green; font-size: 24px"></i>
                                             </a>
@@ -155,7 +146,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
+                                               @* <tr>
                                                     <td>Big Broiler</td>
                                                     <td>2.234</td>
                                                     <td>200</td>
@@ -184,13 +175,13 @@
                                                     <td>2.000</td>
                                                     <td>1200</td>
                                                     <td>2400</td>
-                                                </tr>
+                                                </tr>*@
 
                                             </tbody>
                                         </table>
 
                                         <nav aria-label="Page navigation example">
-                                            <ul class="pagination justify-content-end mt-3 fw-bold">
+                                           @* <ul class="pagination justify-content-end mt-3 fw-bold">
                                                 <li class="page-item">
                                                     <a class="page-link"
                                                        href="#">Previous</a>
@@ -207,7 +198,7 @@
                                                 <li class="page-item">
                                                     <a class="page-link" href="#">Next</a>
                                                 </li>
-                                            </ul>
+                                            </ul>*@
                                         </nav>
                                     </div>
 
@@ -236,3 +227,71 @@
     <!-- App container ends -->
 
 </div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<!-- Include DataTables CSS and JS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Attach click event handler to the anchor link
+
+        $("#SearchBtn").click(function (e) {
+            debugger;
+            e.preventDefault();
+            var FromDate = $("#FromDate").val();
+            var ToDate = $("#ToDate").val();
+            var ReportBy = $("#ReportBy").val();
+            // Perform AJAX request
+            $.ajax({
+                url: '/Product/GetSalesData',
+                method: "GET",
+                data: { FromDate: FromDate, ToDate: ToDate, ReportBy: ReportBy },
+                dataType: "json",
+                success: function (data) {
+                    console.log("AJAX request successful", data);
+                    $("#table-sell tbody").empty();
+                    // Iterate over the data and append rows to the table
+                    $.each(data, function (index, item) {
+                        var row = `<tr>
+                                    <td>${item.ProductName}</td>
+                                    <td>${item.Weight}</td>
+                                    <td>${item.Rate}</td>
+                                    <td>${item.Amount}</td>
+                                </tr>`;
+                        $("#table-sell tbody").append(row);
+                    });
+
+                    // Initialize DataTables
+                    $('#table-sell').DataTable();
+                },
+                error: function (xhr, status, error) {
+                    // Handle the error response
+                    console.error("AJAX request failed", status, error);
+                }
+            });
+        });
+        $("#pdfLink, #ExcelLink").click(function (e) {
+            debugger;
+            e.preventDefault(); 
+            var FromDate=$("#FromDate").val();
+            var ToDate = $("#ToDate").val();
+            var reportType = $(this).attr("id") === "pdfLink" ? "PDF" : "Excel";
+            // Perform AJAX request
+            $.ajax({
+                url: '/Product/GetSalesReport', 
+                method: "GET",
+                data: { FromDate: FromDate, ToDate: ToDate, reportType: reportType },
+                dataType: "json", 
+                success: function (data) {
+                    // Handle the success response
+                    console.log("AJAX request successful", data);
+                },
+                error: function (xhr, status, error) {
+                    // Handle the error response
+                    console.error("AJAX request failed", status, error);
+                }
+            });
+        });
+    });
+</script>

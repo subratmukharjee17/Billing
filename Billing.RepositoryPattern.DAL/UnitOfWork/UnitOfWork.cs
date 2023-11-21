@@ -16,6 +16,8 @@ namespace Billing.RepositoryPattern.InfraStructure.UnitOfWork
         private IMainMenuRepository _mainMenuRepository;
         private ISubMenuRepository _subMenuRepository;
         private ISalesDetailsRepository _salesDetailsRepository;
+        private IProductRepository _productRepository;
+        private IBillingInfoRepository _billingInfoRepository;
 
         public UnitOfWork(ApplicationDbContext dbContext)
         {
@@ -63,6 +65,21 @@ namespace Billing.RepositoryPattern.InfraStructure.UnitOfWork
             }
         }
 
+        public IProductRepository ProductRepository
+        {
+            get
+            {
+                return _productRepository = _productRepository ?? new ProductRepository(_dbContext);
+            }
+        }
+
+        public IBillingInfoRepository BillingInfoRepository
+        {
+            get
+            {
+                return _billingInfoRepository = _billingInfoRepository ?? new BillingInfoRepository(_dbContext);
+            }
+        }
         public void Commit()
             => _dbContext.SaveChanges();
 

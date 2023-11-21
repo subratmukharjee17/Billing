@@ -205,37 +205,33 @@
 								<div class="card-body">
 
 
-									
 									<hr class="mt-4">
 									<div class="">
 										<form  method="post" id="Sale" novalidate class="sell-form">
-
+											<div id="dynamicRowsContainer">
+												<!-- Dynamic rows will be added here -->
+											</div>
 											<div class="row form-group">
 												<div class="col-sm-12   col-lg-4 mt-3 mt-lg-0">
 													<div class="d-flex align-items-center">
 														<label class=" form-label" style="width: 30%;"
 															   for="customerName">Customer Name</label>
-														<input type="text" class="form-control " style="width: 70%;"
-															   id="customerName" name="customerName" placeholder="Customer Name">
+														<input type="text" class="form-control " style="width: 70%;" id="customerName" name="customerName" placeholder="Customer Name">
 													</div>
 												</div>
 												<div class="col-sm-12   col-lg-4 mt-3 mt-lg-0">
 													<div class="d-flex  align-items-center">
-														<label class=" form-label " style="width: 30%;"
-															   for="Address">Address</label>
-														<input type="text" class=" form-control" style="width: 70%;"
-															   id="Address" name="Address" placeholder="Address" />
+														<label class=" form-label " style="width:30%;" for="Address">Address</label>
+														<input type="text" class=" form-control" style="width: 70%;" id="Address" name="Address" placeholder="Address" />
 													</div>
 												</div>
 												<div class="col-sm-12   col-lg-4 mt-3 mt-lg-0">
 
 													<div class="d-flex align-items-center">
 														<label class=" form-label " style="width: 30%;" for="phone">
-															Phone
-															No.
+															Phone No.
 														</label>
-														<input type="number" class=" form-control" style="width: 70%;"
-															   id="phone" name="phone" placeholder="Enter phone " />
+														<input type="number" class=" form-control" style="width: 70%;" id="phone" name="phone" placeholder="Enter phone " />
 													</div>
 												</div>
 											</div>
@@ -276,8 +272,7 @@
 												<div class="d-flex flex-column w-100 js-row">
 													<div class="mb-2 sellFontWeight">Weight(Per Gram)</div>
 													<div>
-														<input required type="text" placeholder="weight(per gram)" name="weight"
-															   class="form-control">
+														<input required type="text" placeholder="weight(per gram)" name="weight" id="weight" class="form-control">
 													</div>
 
 
@@ -285,8 +280,7 @@
 												<div class="d-flex flex-column w-100 js-row">
 													<div class="mb-2 sellFontWeight">Rate(Per KG)</div>
 													<div>
-														<input required type="text" placeholder="Rate" name="rate"
-															   class="form-control">
+														<input required type="text" placeholder="Rate" name="rate" id="rate" class="form-control">
 													</div>
 
 
@@ -294,17 +288,14 @@
 												<div class="d-flex flex-column w-100 js-row">
 													<div class="mb-2 sellFontWeight">Amount</div>
 													<div>
-														<input required type="text" placeholder="Amount" name="amount"
-															   class="form-control">
+														<input required type="text" placeholder="Amount" name="amount" id="amount" class="form-control">
 													</div>
 
 
 												</div>
 												<div class="d-flex align-items-end  ">
 													<div class="">
-														<button type="submit"
-																class="btn btn-primary sell-0  btn-save "
-																data-rownum="sell-0" name="btn-add" id="sell-plus-btn-js">
+														<button type="submit" class="btn btn-primary sell-0  btn-save " data-rownum="sell-0" name="btn-add" id="sell-plus-btn-js">
 															<i class="bi bi-plus-circle"></i>
 														</button>
 													</div>
@@ -341,8 +332,7 @@
 											<button type="button" class="btn btn-info btn-lg  ">
 												Cancel
 											</button>
-											<button type="button"
-													class="btn btn-primary btn-lg px-4 btn-save-table-data">
+											<button type="button" class="btn btn-primary btn-lg px-4 btn-save-table-data">
 												Save
 											</button>
 										</div>
@@ -376,24 +366,116 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>	
 		<script src="~/js/bootstrap.bundle.min.js"></script>
 		<!-- Custom JS files -->
-		<script src="~/js/custom.js"></script>
-		<script src="~/js/sell.js"></script>
-		<script>
-			//$(document).ready(function () {
+		@*<script src="~/js/custom.js"></script>*@
+	@*	<script>
+			
 			$(document).on("click", ".btn-save-table-data", function (e) {
 				debugger;
 				//$('#Sale').submit(function (event) {
 					debugger;
 					event.preventDefault(); // Prevent the default form submission
-				var formData = $('#Sale').serialize(); // Get the form data
+				//   var formData = $('#Sale').serialize(); // Get the form data
+				var currentDate = new Date();
+				var formattedDate = currentDate.toISOString().replace(/T/, ' ').replace(/\..+/, '');
+				// Set the SalesDetails.SaleDate
+				
+				//var SalesDetails = new Object();
+				//SalesDetails.SaleDate=formattedDate;
+				//SalesDetails.customerName = $('#customerName').val();
+				//SalesDetails.CustomerAddress = $('#Address').val();
+				//SalesDetails.CustomerPhNo = $('#phone').val();
+				//SalesDetails.ProductName = $('#Pname').val();
+				//SalesDetails.ProductWeight = $('#weight').val();
+				//SalesDetails.ProductRate = $('#rate').val();
+				//SalesDetails.Amount = $('#amount').val();
 
+				var rowCounter = 0;
+
+				// Handle click event on the "Add Row" button
+				$("#sell-plus-btn-js").click(function () {
+					// Increment the row counter
+					rowCounter++;
+
+					// Create a new row with unique IDs
+					var newRow = `<div class="row form-group dynamic-row" data-rownum="${rowCounter}">
+					<div class="d-flex align-items-end">
+					  <button type="button" class="btn btn-danger btn-remove-row" data-rownum="${rowCounter}">
+						<i class="bi bi-trash"></i> Remove
+					  </button>
+					</div>
+				  </div>`;
+
+					// Append the new row to the container
+					$("#dynamicRowsContainer").append(newRow);
+				});
+
+				// Handle click event on the "Remove Row" button
+				$(document).on("click", ".btn-remove-row", function () {
+					// Get the row number from the data attribute
+					var rownum = $(this).data("rownum");
+
+					// Remove the corresponding dynamic row
+					$(".dynamic-row[data-rownum='" + rownum + "']").remove();
+				});
+
+				// Handle form submission
+			//	$(document).on("click", ".btn-save-table-data", function () {
+					debugger;
+					var salesDetailsArray = [];
+					// Additional processing for dynamic rows
+					$(".dynamic-row").each(function () {
+						var rownum = $(this).data("rownum");
+
+						// Prepare data for submission
+						var formData = $("#Sale").serializeArray();
+						// Add dynamic row data to the form data
+						formData.push({
+							name: "SaleDate" + rownum,
+							value: formattedDate
+						});
+						formData.push({
+							name: "customerName" + rownum,
+							value: $(this).find(".customerName").val()
+						});
+						formData.push({
+							name: "CustomerAddress" + rownum,
+							value: $(this).find(".Address").val()
+						});
+						formData.push({
+							name: "CustomerPhNo" + rownum,
+							value: $(this).find(".phone").val()
+						});
+						formData.push({
+							name: "ProductName_" + rownum,
+							value: $(this).find(".Pname").val()
+						});
+						formData.push({
+							name: "ProductWeight" + rownum,
+							value: $(this).find(".Weight").val()
+						});
+						formData.push({
+							name: "ProductRate" + rownum,
+							value: $(this).find(".rate").val()
+						}); 
+						formData.push({
+							name: "Amount" + rownum,
+							value: $(this).find(".amount").val()
+						});
+						var salesDetailsObject = {};
+						$.each(formData, function (i, field) {
+							salesDetailsObject[field.name] = field.value;
+						});
+
+						// Add the SalesDetails object to the array
+						salesDetailsArray.push(salesDetailsObject);
+					});
 					$.ajax({
 						type: 'POST',
-						url: '/Home/AddSale', 
-						data: formData,
+						url: '/Home/AddSale',
+						//data: formData,
+						contentType: 'application/json',
+						data: JSON.stringify(salesDetailsArray),
 						success: function (response) {
-							debugger;
-							// Handle the success response here
 							console.log(response);
 						},
 						error: function (error) {
@@ -401,14 +483,103 @@
 							console.log(error);
 						}
 					});
-				//});
 
-				//$(document).on("click", ".btn-save-table-data", function (e) {
-				//	debugger;
-				//	$('#Sale').submit(); // Trigger the form submission when the button is clicked
-				//});
-			});
-		</script>
+			//});
+	  
+		});
+
+			//$(document).on("click", ".btn-save-table-data", function (e) {
+			//	debugger;
+			//	event.preventDefault();
+			//	var salesDetailsArray = [];
+			//	var currentDate = new Date();
+			//	var formattedDate = currentDate.toISOString().replace(/T/, ' ').replace(/\..+/, '');
+
+			//	// Prepare data for submission
+			//	var formData = $("#Sale").serializeArray();
+			////	var formData = $('#Sale').serialize();
+			//	// Additional processing for dynamic rows
+			////	$(".dynamic-row").each(function () {
+			//		var rownum = $(this).data("rownum");
+
+			//		// Add dynamic row data to the form data
+			//		//formData.push({
+			//		//	name: "SaleDate" + rownum,
+			//		//	value: formattedDate
+			//		//});
+			//		//formData.push({
+			//		//	name: "customerName" + rownum,
+			//		//	value: $(this).find(".customerName").val()
+			//		//});
+			//		//formData.push({
+			//		//	name: "CustomerAddress" + rownum,
+			//		//	value: $(this).find(".Address").val()
+			//		//});
+			//		//formData.push({
+			//		//	name: "CustomerPhNo" + rownum,
+			//		//	value: $(this).find(".phone").val()
+			//		//});
+			//		//formData.push({
+			//		//	name: "ProductName_" + rownum,
+			//		//	value: $(this).find(".Pname").val()
+			//		//});
+			//		//formData.push({
+			//		//	name: "ProductWeight" + rownum,
+			//		//	value: $(this).find(".Weight").val()
+			//		//});
+			//		//formData.push({
+			//		//	name: "ProductRate" + rownum,
+			//		//	value: $(this).find(".rate").val()
+			//		//});
+			//		//formData.push({
+			//		//	name: "Amount" + rownum,
+			//		//	value: $(this).find(".amount").val()
+			//		//});
+
+			//	var salesDetailsObject = {
+			//		SaleDate: formattedDate,
+			//		customerName: $('#customerName').val(),
+			//		CustomerAddress: $('#Address').val(),
+			//		CustomerPhNo: $('#phone').val(),
+			//		ProductName: $('#Pname').val(),
+			//		ProductWeight: $('#Weight').val(),
+			//		ProductRate: $('#rate').val(),
+			//		Amount: $('#amount').val()
+			//	};
+
+			//	// Add the SalesDetails object to the array
+			//	salesDetailsArray.push(salesDetailsObject);
+			////	});
+
+			
+
+			//	// Construct array of sales details objects
+			//	$(".dynamic-row").each(function () {
+			//		var rownum = $(this).data("rownum");
+			//		var salesDetailsObject = {};
+			//		$.each(formData, function (i, field) {
+			//			salesDetailsObject[field.name] = field.value;
+			//		});
+
+			//		// Add the SalesDetails object to the array
+			//		salesDetailsArray.push(salesDetailsObject);
+			//	});
+			//	console.log(JSON.stringify(salesDetailsArray));
+			//	$.ajax({
+			//		type: 'POST',
+			//		url: '/Home/AddSale',
+			//		contentType: 'application/json',
+			//		data: JSON.stringify(salesDetailsArray), //JSON.stringify(salesDetailsArray),
+			//		success: function (response) {
+			//			console.log(response);
+			//		},
+			//		error: function (error) {
+			//			console.log(error);
+			//		}
+			//	});
+			//});
+
+		</script>*@
 
 </body>
 

@@ -84,6 +84,63 @@ namespace Billing.RepositoryPattern.InfraStructure.Migrations
                     b.ToTable("Auditable", "Admin");
                 });
 
+            modelBuilder.Entity("Billing.RepositoryPattern.Domain.DbEntities.BillingInfoEntity", b =>
+                {
+                    b.Property<int>("BillingId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("BillingId")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CustomerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("CustomersCustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PaymentType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,4)");
+
+                    b.Property<string>("UserID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("BillingId");
+
+                    b.HasIndex("CustomersCustomerId");
+
+                    b.ToTable("BillingInfo", "Product");
+                });
+
+            modelBuilder.Entity("Billing.RepositoryPattern.Domain.DbEntities.CustomersEntity", b =>
+                {
+                    b.Property<int>("CustomerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("CustomerId")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CustomerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CustomerId");
+
+                    b.ToTable("Customers", "Product");
+                });
+
             modelBuilder.Entity("Billing.RepositoryPattern.Domain.DbEntities.MainMenuEntity", b =>
                 {
                     b.Property<int>("MainMenuId")
@@ -98,6 +155,32 @@ namespace Billing.RepositoryPattern.InfraStructure.Migrations
                     b.HasKey("MainMenuId");
 
                     b.ToTable("MainMenu", "Admin");
+                });
+
+            modelBuilder.Entity("Billing.RepositoryPattern.Domain.DbEntities.ProductsEntity", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("ProductId")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,4)");
+
+                    b.Property<string>("ProductCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProductName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ProductId");
+
+                    b.ToTable("Products", "Product");
                 });
 
             modelBuilder.Entity("Billing.RepositoryPattern.Domain.DbEntities.RoleEntity", b =>
@@ -120,6 +203,44 @@ namespace Billing.RepositoryPattern.InfraStructure.Migrations
                     b.HasKey("RoleId");
 
                     b.ToTable("Roles", "Admin");
+                });
+
+            modelBuilder.Entity("Billing.RepositoryPattern.Domain.DbEntities.SalesDetailsEntity", b =>
+                {
+                    b.Property<int>("SalesId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("SalesId")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("BillingId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("BillingInfoBillingId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProductsProductId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("SaleDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("SalesId");
+
+                    b.HasIndex("BillingInfoBillingId");
+
+                    b.HasIndex("ProductsProductId");
+
+                    b.ToTable("SalesDetails", "Product");
                 });
 
             modelBuilder.Entity("Billing.RepositoryPattern.Domain.DbEntities.SubMenuEntity", b =>
@@ -222,6 +343,30 @@ namespace Billing.RepositoryPattern.InfraStructure.Migrations
                     b.HasIndex("RolesRoleId");
 
                     b.ToTable("Users", "Admin");
+                });
+
+            modelBuilder.Entity("Billing.RepositoryPattern.Domain.DbEntities.BillingInfoEntity", b =>
+                {
+                    b.HasOne("Billing.RepositoryPattern.Domain.DbEntities.CustomersEntity", "Customers")
+                        .WithMany()
+                        .HasForeignKey("CustomersCustomerId");
+
+                    b.Navigation("Customers");
+                });
+
+            modelBuilder.Entity("Billing.RepositoryPattern.Domain.DbEntities.SalesDetailsEntity", b =>
+                {
+                    b.HasOne("Billing.RepositoryPattern.Domain.DbEntities.BillingInfoEntity", "BillingInfo")
+                        .WithMany()
+                        .HasForeignKey("BillingInfoBillingId");
+
+                    b.HasOne("Billing.RepositoryPattern.Domain.DbEntities.ProductsEntity", "Products")
+                        .WithMany()
+                        .HasForeignKey("ProductsProductId");
+
+                    b.Navigation("BillingInfo");
+
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Billing.RepositoryPattern.Domain.DbEntities.SubMenuEntity", b =>

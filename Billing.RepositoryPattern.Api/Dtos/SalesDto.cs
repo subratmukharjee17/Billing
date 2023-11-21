@@ -1,18 +1,19 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using Billing.RepositoryPattern.Domain.DbEntities;
 
 namespace Billing.RepositoryPattern.Api.Dtos
 {
     public class SalesDto
     {
-        public int BillNo { get; set; }
-
-        public DateTime SaleDate { get; set; }  
-        public string CustomerName { get; set; }
-        public string CustomerAddress { get; set; }
-        public Int64 CustomerPhNo { get; set; }
-        public string ProductName { get; set; }
-        public decimal ProductWeight { get; set; }
-        public decimal ProductRate { get; set; }
+        public int SalesId { get; set; }
+        public int ProductId { get; set; }
+        public decimal Quantity { get; set; }
         public decimal Amount { get; set; }
+        public DateTime SaleDate { get; set; }
+        public int BillingId { get; set; }
+
     }
 }

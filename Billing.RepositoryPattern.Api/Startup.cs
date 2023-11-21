@@ -11,7 +11,8 @@ using Billing.RepositoryPattern.InfraStructure;
 using Billing.RepositoryPattern.Api.Services.UserService;
 using Billing.RepositoryPattern.Api.Services.SalesService;
 using System.Net.Http;
-using System.Text.Json.Serialization;
+using Billing.RepositoryPattern.Api.Services.ProductService;
+using Billing.RepositoryPattern.Api.Services.BillingService;
 
 namespace Billing.RepositoryPattern.Api
 {
@@ -33,20 +34,19 @@ namespace Billing.RepositoryPattern.Api
                     ef => ef.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)),
                     ServiceLifetime.Scoped);
 
-            services.AddControllers()
-           .AddJsonOptions(o => o.JsonSerializerOptions
-               .ReferenceHandler = ReferenceHandler.Preserve);
+            services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Billing.RepositoryPattern.Api", Version = "v1" });
             });
-
             services.AddControllersWithViews();
             services.AddHttpClient();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddTransient(typeof(IUserService), typeof(UserService));
             services.AddTransient(typeof(IMenuService), typeof(MenuService));
             services.AddTransient(typeof(ISalesService), typeof(SalesService));
+            services.AddTransient(typeof(IProductService), typeof(ProductService));
+            services.AddTransient(typeof(IBillingService), typeof(BillingService));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

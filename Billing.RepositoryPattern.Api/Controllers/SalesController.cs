@@ -4,6 +4,7 @@ using Billing.RepositoryPattern.Api.Services.SalesService;
 using Billing.RepositoryPattern.Api.Dtos;
 using System.Threading.Tasks;
 using Billing.RepositoryPattern.Domain.DbEntities;
+using Billing.RepositoryPattern.InfraStructure.Repositories;
 
 namespace Billing.RepositoryPattern.Api.Controllers
 {
@@ -26,8 +27,6 @@ namespace Billing.RepositoryPattern.Api.Controllers
         public async Task AddSales([FromBody] SalesDto sales) =>
             await _salesService.AddSales(sales);
 
-        //[HttpGet("Login")]
-        //public async Task<UserEntity> Login(string userName, string password) =>
-        //    await _userService.Login(userName, password);
+  
     }
 }
