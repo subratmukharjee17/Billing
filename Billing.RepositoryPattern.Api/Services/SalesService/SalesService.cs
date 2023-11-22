@@ -23,7 +23,7 @@ namespace Billing.RepositoryPattern.Api.Services.SalesService
 
             var sales = new SalesDetailsEntity
             {
-                SalesId=salesDto.SalesId,
+              //  SalesId=salesDto.SalesId,
                 SaleDate=salesDto.SaleDate,
                 BillingId = salesDto.BillingId,
                 ProductId = salesDto.ProductId,

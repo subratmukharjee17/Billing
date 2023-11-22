@@ -44,14 +44,14 @@
 
                 </div>
                 <!-- Sidebar profile ends -->
-                @foreach (var item in categories)
+               @* @foreach (var item in categories)
                 {
                     <span>@item.MainMenuName</span>
                     @foreach (var item1 in @item?.SubMenuList)
                     {
                         <span>@item1.SubMenuName</span>
                     }
-                }
+                }*@
 
                 <!-- Sidebar menu starts -->
                 <div class="sidebarMenuScroll">
