@@ -15,12 +15,5 @@ namespace Billing.RepositoryPattern.InfraStructure
         {
 
         }
-        //public async Task<List<ProductEntity>> GetAll()
-        //{
-        //    // var result = _dbContext.SubMenu.Where(x => x.MainMenuId.Equals(mainMenuId) && x.RoleId.Equals(roleId)).ToList();
-        //  //  var result = _dbContext.Product.ToList();
-        //  //  return await Task.FromResult(result);
-        //}
-
     }
 }

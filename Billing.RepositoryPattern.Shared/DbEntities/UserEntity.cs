@@ -10,18 +10,17 @@ namespace Billing.RepositoryPattern.Domain.DbEntities
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("UserId")]
         public int UserId { get; set; }
+        [Required(ErrorMessage = "FirstName is required")]
         public string FirstName { get; set; }
+        [Required(ErrorMessage = "LastName is required")]
         public string LastName { get; set; }
-        public string UserName { get; set; }
+        [Required(ErrorMessage = "EmailId is required")]
         public string EmailId { get; set; }
+        [Required(ErrorMessage = "Phone Number is required")]
         public string PhoneNumber { get; set; }
-        public DateTime Dob { get; set; }
-        public int Gender { get; set; }
+        [Required(ErrorMessage = "Password is required")]
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
-        [ForeignKey("AddressId")]
-        public int AddressId { get; set; }
-        public virtual AddressEntity Address { get; set; }
         [ForeignKey("RoleId")]
         public int RoleId { get; set; }
         public virtual RolesEntity Roles { get; set; }

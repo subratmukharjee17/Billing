@@ -12,7 +12,7 @@ namespace Billing.RepositoryPattern.InfraStructure.UnitOfWork
     {
         private readonly ApplicationDbContext _dbContext;
         private IUserRepository _userRepository;
-        private IAddressRepository _addressRepository;
+        private IRoleRepository _roleRepository;
         private IMainMenuRepository _mainMenuRepository;
         private ISubMenuRepository _subMenuRepository;
         private ISalesDetailsRepository _salesDetailsRepository;
@@ -33,11 +33,11 @@ namespace Billing.RepositoryPattern.InfraStructure.UnitOfWork
             }
         }
 
-        public IAddressRepository AddressRepository
+        public IRoleRepository RoleRepository
         {
             get
             {
-                return _addressRepository = _addressRepository ?? new AddressRepository(_dbContext);
+                return _roleRepository = _roleRepository ?? new RoleRepository(_dbContext);
             }
         }
 

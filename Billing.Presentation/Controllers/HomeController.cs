@@ -25,37 +25,23 @@ namespace Billing.Presentation.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-     //   Uri baseAddress = new Uri("http://localhost:36942/api");
+        //   Uri baseAddress = new Uri("http://localhost:36942/api");
         private readonly HttpClient _httpClient;
         private readonly string _apiUrl;
         public HomeController(ILogger<HomeController> logger, IConfiguration configuration)
         {
             _httpClient = new HttpClient();
-           // _httpClient.BaseAddress = baseAddress;
+            // _httpClient.BaseAddress = baseAddress;
             _logger = logger;
             _apiUrl = configuration.GetValue<string>("ApiUrl");
         }
 
         public async Task<ActionResult> Index()
         {
-            //string apiUrl = "http://localhost:36942/api/Menu/GetAllMenus";
-            //User user = new User();
-
-            //using (HttpClient client = new HttpClient())
-            //{
-            //    client.BaseAddress = new Uri(apiUrl);
-            //    client.DefaultRequestHeaders.Accept.Clear();
-            //    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
-            //    HttpResponseMessage response = await client.GetAsync(apiUrl);
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        var data = await response.Content.ReadAsStringAsync();
-            //        var table = Newtonsoft.Json.JsonConvert.DeserializeObject<System.Data.DataTable>(data);
-            //    }
-
-
-            //}
+            string apiUrl = "http://localhost:36942/api/Menu/GetAllMenus";
+            HttpResponseMessage response = await _httpClient.GetAsync(apiUrl);
+            var responseContent = await response.Content.ReadAsStringAsync();
+            var menu = (List<MainMenu>)Newtonsoft.Json.JsonConvert.DeserializeObject(responseContent, typeof(List<MainMenu>));
 
             return View();
         }
@@ -71,7 +57,7 @@ namespace Billing.Presentation.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        
+
 
         public IActionResult Sales()
         {
@@ -82,7 +68,7 @@ namespace Billing.Presentation.Controllers
         public async Task<IActionResult> AddSale([FromBody] List<SalesDetails> salesDetailsList)
         {
             //string apiUrl = _apiUrl + "Sales/";// "http://localhost:36942/api/Sales/";
-            string apiUrl= "http://localhost:36942/api/Sales/";
+            string apiUrl = "http://localhost:36942/api/Sales/";
             // Process the list of SalesDetails objects
             foreach (var salesDetails in salesDetailsList)
             {
@@ -97,7 +83,7 @@ namespace Billing.Presentation.Controllers
                     HttpResponseMessage response = await client.PostAsync("AddSales", data);
                     if (response.IsSuccessStatusCode)
                     {
-                       // return View();
+                        // return View();
                     }
 
 
@@ -107,6 +93,6 @@ namespace Billing.Presentation.Controllers
             return Json("");
         }
 
-        
+
     }
 }

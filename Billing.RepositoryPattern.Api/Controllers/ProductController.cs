@@ -18,12 +18,16 @@ namespace Billing.RepositoryPattern.Api.Controllers
             _productService = productService;
         }
 
-        [HttpGet("GetAll")]
-        public async Task<IEnumerable<ProductsEntity>> GetAll() =>
+        [HttpPost("AddProduct")]
+        public async Task AddProduct([FromBody] ProductDto product) =>
+           await _productService.AddProduct(product);
+
+        [HttpGet("GetAllProducts")]
+        public async Task<IEnumerable<ProductsEntity>> GetAllProducts() =>
             await _productService.GetAll();
 
 
-        [HttpPost("AddProduct")]
+        [HttpPost("AddSale")]
         public async Task AddSales([FromBody] ProductDto Product) =>
             await _productService.AddProduct(Product);
 

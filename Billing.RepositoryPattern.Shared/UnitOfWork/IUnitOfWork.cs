@@ -6,7 +6,7 @@ namespace Billing.RepositoryPattern.Domain.UnitOfWork
     public interface IUnitOfWork
     {
         IUserRepository UserRepository { get; }
-        IAddressRepository AddressRepository { get; }
+        IRoleRepository RoleRepository { get; }
         IMainMenuRepository MainRepository { get; }
         ISubMenuRepository SubMenuRepository { get; }
         ISalesDetailsRepository SalesDetailsRepository { get; }

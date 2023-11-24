@@ -13,6 +13,7 @@ using Billing.RepositoryPattern.Api.Services.SalesService;
 using System.Net.Http;
 using Billing.RepositoryPattern.Api.Services.ProductService;
 using Billing.RepositoryPattern.Api.Services.BillingService;
+using System.Text.Json.Serialization;
 
 namespace Billing.RepositoryPattern.Api
 {
@@ -34,7 +35,9 @@ namespace Billing.RepositoryPattern.Api
                     ef => ef.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)),
                     ServiceLifetime.Scoped);
 
-            services.AddControllers();
+            services.AddControllers()
+            .AddJsonOptions(o => o.JsonSerializerOptions
+               .ReferenceHandler = ReferenceHandler.Preserve);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Billing.RepositoryPattern.Api", Version = "v1" });

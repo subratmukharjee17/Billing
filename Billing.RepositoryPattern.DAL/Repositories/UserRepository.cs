@@ -20,7 +20,7 @@ namespace Billing.RepositoryPattern.InfraStructure
             try
             {
                 var userInfo = (from user in _dbContext.Users
-                                where user.UserName == username && user.Password == passWord
+                                where user.EmailId == username && user.Password == passWord
                                 select user).FirstOrDefaultAsync();
                 return await userInfo;
             }

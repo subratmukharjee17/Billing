@@ -22,12 +22,13 @@ namespace Billing.RepositoryPattern.Api.Services.ProductService
 
             var product = new ProductsEntity
             {
-              ProductName= productDto.ProductName,
-              Price= productDto.Price,
-              ProductCode= productDto.ProductCode,
-              IsActive= productDto.IsActive
+                ProductCode = productDto.ProductCode,
+                ProductName = productDto.ProductName,
+                Description = productDto.Description,
+                Price = productDto.Price,
+                IsActive = productDto.IsActive
             };
-         
+
             _unitOfWork.ProductRepository.Add(product);
             await _unitOfWork.CommitAsync();
         }

@@ -18,13 +18,20 @@ namespace Billing.RepositoryPattern.Api.Controllers
         }
 
         [HttpGet("GetAllUsers")]
-        public async Task<IEnumerable<UserEntity>> GetAll() =>
-            await _userService.GetAll();
-
+        public async Task<IEnumerable<UserEntity>> GetAllUsers() =>
+            await _userService.GetAllUsers();
 
         [HttpPost("AddUser")]
         public async Task AddUser([FromBody] UserDto user) =>
             await _userService.AddUser(user);
+
+        [HttpPost("AddRole")]
+        public async Task AddRole([FromBody] RoleDto role) =>
+            await _userService.AddRole(role);
+
+        [HttpPost("GetAllRoles")]
+        public async Task<IEnumerable<RolesEntity>> GetAllRoles() =>
+            await _userService.GetAllRoles();
 
         [HttpGet("Login")]
         public async Task<UserEntity> Login(string userName, string password) =>

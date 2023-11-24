@@ -13,13 +13,13 @@ namespace Billing.RepositoryPattern.Domain.DbEntities
 
         public string ProductCode { get; set; }
 
-        [Required(ErrorMessage = "ProductName is required")]
+        [Required(ErrorMessage = "Product name is required")]
         public string ProductName { get; set; }
        
-        [Column(TypeName = "decimal(18, 4)")]
+        public string Description { get; set; }
 
-        [Required(ErrorMessage = "ProductPrice is required")]
-        public decimal Price { get; set; }
+        [Required(ErrorMessage = "Product price is required")]
+        public float Price { get; set; }
      
         public bool IsActive { get; set; }
 

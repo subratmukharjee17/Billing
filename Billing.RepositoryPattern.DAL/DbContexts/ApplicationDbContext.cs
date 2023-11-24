@@ -15,11 +15,13 @@ namespace Billing.RepositoryPattern.InfraStructure
             get;
             set;
         }
-        public DbSet<AddressEntity> Address
+
+        public DbSet<RolesEntity> Roles
         {
             get;
             set;
         }
+
         public DbSet<AuditableEntity> Auditable
         {
             get;
