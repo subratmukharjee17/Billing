@@ -11,6 +11,8 @@ namespace Billing.RepositoryPattern.Api.Services.SalesService
     {
        public Task<IEnumerable<SalesDetailsEntity>> GetAll();
         public Task AddSales(SalesDto sales);
+
+        public Task AddCustomerAndBillingInfo(SalesDto sales);
    
     }
 }

@@ -12,6 +12,7 @@ namespace Billing.RepositoryPattern.Domain.UnitOfWork
         ISalesDetailsRepository SalesDetailsRepository { get; }
         IProductRepository ProductRepository { get; }
         IBillingInfoRepository BillingInfoRepository { get; }
+        ICustomerRepository CustomerRepository { get; }
         void Commit();
         void Rollback();
         Task CommitAsync();

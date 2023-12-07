@@ -15,7 +15,7 @@ namespace Billing.RepositoryPattern.Domain.DbEntities
         public int BillingId { get; set; }
 
 
-        [ForeignKey("CustomerId")]
+        [ForeignKey("Customers")]
         [Required(ErrorMessage = "CustomerId is required")]
         public string CustomerId { get; set; }
         

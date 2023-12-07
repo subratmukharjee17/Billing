@@ -27,6 +27,9 @@ namespace Billing.RepositoryPattern.Api.Controllers
         public async Task AddSales([FromBody] SalesDto sales) =>
             await _salesService.AddSales(sales);
 
-  
-    }
+		[HttpPost("AddCustomerAndBillingInfo")]
+		public async Task AddCustomerAndBillingInfo([FromBody] SalesDto sales) =>
+			await _salesService.AddCustomerAndBillingInfo(sales);
+
+	}
 }

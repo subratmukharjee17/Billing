@@ -18,6 +18,7 @@ namespace Billing.RepositoryPattern.InfraStructure.UnitOfWork
         private ISalesDetailsRepository _salesDetailsRepository;
         private IProductRepository _productRepository;
         private IBillingInfoRepository _billingInfoRepository;
+        private ICustomerRepository _customerRepository;
 
         public UnitOfWork(ApplicationDbContext dbContext)
         {
@@ -78,6 +79,13 @@ namespace Billing.RepositoryPattern.InfraStructure.UnitOfWork
             get
             {
                 return _billingInfoRepository = _billingInfoRepository ?? new BillingInfoRepository(_dbContext);
+            }
+        }
+        public ICustomerRepository CustomerRepository
+        {
+            get
+            {
+                return _customerRepository = _customerRepository ?? new CustomerRepository(_dbContext);
             }
         }
         public void Commit()

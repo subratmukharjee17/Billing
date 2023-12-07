@@ -39,7 +39,7 @@ namespace Billing.Presentation.Controllers
                     var salesData = Newtonsoft.Json.JsonConvert.DeserializeObject<List<SalesDetails>>(data);
 
                     // Pass the sales data to the view
-                    return View(salesData);
+                    return Json(salesData);
                 }
 
             }
@@ -104,10 +104,10 @@ namespace Billing.Presentation.Controllers
             {
                 var salesDetails = new SalesDetails
                 {
-                    BillNo = Convert.ToInt64(row["BillNo"]),
-                    ProductId = Convert.ToInt16(row["ProductId"]),
-                    Quantity = Convert.ToDecimal(row["Quantity"]),
-                    Amount = Convert.ToDecimal(row["Amount"])
+                    //BillNo = Convert.ToInt64(row["BillNo"]),
+                    //ProductId = Convert.ToInt16(row["ProductId"]),
+                    //Quantity = Convert.ToDecimal(row["Quantity"]),
+                    //Amount = Convert.ToDecimal(row["Amount"])
                 };
 
                 salesDetailsList.Add(salesDetails);
@@ -183,10 +183,10 @@ namespace Billing.Presentation.Controllers
             {
                 var salesDetails = new SalesDetails
                 {
-                    BillNo = Convert.ToInt64(row["BillNo"]),
-                    ProductId = Convert.ToInt16(row["ProductId"]),
-                    Quantity = Convert.ToDecimal(row["Quantity"]),
-                    Amount = Convert.ToDecimal(row["Amount"])
+                    //BillNo = Convert.ToInt64(row["BillNo"]),
+                    //ProductId = Convert.ToInt16(row["ProductId"]),
+                    //Quantity = Convert.ToDecimal(row["Quantity"]),
+                    //Amount = Convert.ToDecimal(row["Amount"])
 
                 };
 

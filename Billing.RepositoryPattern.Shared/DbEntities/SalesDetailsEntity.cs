@@ -29,7 +29,7 @@ namespace Billing.RepositoryPattern.Domain.DbEntities
        
         public  DateTime SaleDate { get; set; }
 
-        [ForeignKey("BillingId")]
+        [ForeignKey("BillingInfo")]
         public int BillingId { get; set; }
 
         public virtual BillingInfoEntity BillingInfo { get; set; }
