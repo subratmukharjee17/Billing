@@ -1,14 +1,8 @@
-﻿using Billing.RepositoryPattern.Shared.DbEntities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Billing.RepositoryPattern.Domain.DbEntities;
 
-namespace Billing.RepositoryPattern.Shared.Interfaces
+namespace Billing.RepositoryPattern.Domain.Interfaces
 {
-    public interface IRoleRepository : IGenericRepository<RoleEntity>
+    public interface IRoleRepository : IGenericRepository<RolesEntity>
     {
-        List<RoleEntity> GetAll();
     }
 }

@@ -1,17 +1,19 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using Billing.RepositoryPattern.Api.Adapters;
-using Billing.RepositoryPattern.Api.Services;
-using Billing.RepositoryPattern.DAL.DbContexts;
-using Billing.RepositoryPattern.DAL.Repositories;
-using Billing.RepositoryPattern.Shared.Interfaces;
+using Billing.RepositoryPattern.Domain.UnitOfWork;
+using Billing.RepositoryPattern.InfraStructure.UnitOfWork;
+using Billing.RepositoryPattern.InfraStructure;
+using Billing.RepositoryPattern.Api.Services.UserService;
+using Billing.RepositoryPattern.Api.Services.SalesService;
+using System.Net.Http;
+using Billing.RepositoryPattern.Api.Services.ProductService;
+using Billing.RepositoryPattern.Api.Services.BillingService;
+using System.Text.Json.Serialization;
 
 namespace Billing.RepositoryPattern.Api
 {
@@ -33,27 +35,21 @@ namespace Billing.RepositoryPattern.Api
                     ef => ef.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)),
                     ServiceLifetime.Scoped);
 
-            services.AddControllers();
+            services.AddControllers()
+            .AddJsonOptions(o => o.JsonSerializerOptions
+               .ReferenceHandler = ReferenceHandler.Preserve);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Billing.RepositoryPattern.Api", Version = "v1" });
             });
-
-            services.AddTransient<IStudentRepository, StudentRepository>();
-            services.AddTransient<IStudentAddressRepository, StudentAddressRepository>();
-            services.AddTransient<IStudentSportRepository, StudentSportRepository>();
-
-            services.AddTransient<IStudentAdapter, StudentAdapter>();
-            services.AddTransient<IStudentService, StudentService>();
-
-            services.AddTransient<IUserRepository, UserRepository>();
-            services.AddTransient<IAddressRepository, AddressRepository>();
-
-            services.AddTransient<IUserAdapter, UserAdapter>();
-            services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IRoleRepository, RoleRepository>();
-            services.AddTransient<IUnitOfWorkService, UnitOfWorkService>();
-
+            services.AddControllersWithViews();
+            services.AddHttpClient();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddTransient(typeof(IUserService), typeof(UserService));
+            services.AddTransient(typeof(IMenuService), typeof(MenuService));
+            services.AddTransient(typeof(ISalesService), typeof(SalesService));
+            services.AddTransient(typeof(IProductService), typeof(ProductService));
+            services.AddTransient(typeof(IBillingService), typeof(BillingService));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

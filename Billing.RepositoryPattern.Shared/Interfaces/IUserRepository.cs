@@ -1,16 +1,10 @@
-﻿using Billing.RepositoryPattern.Shared.DbEntities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Billing.RepositoryPattern.Domain.DbEntities;
 using System.Threading.Tasks;
 
-namespace Billing.RepositoryPattern.Shared.Interfaces
+namespace Billing.RepositoryPattern.Domain.Interfaces
 {
     public interface IUserRepository : IGenericRepository<UserEntity>
     {
-        UserEntity Login(string username, string password);
-
-        int GetLastUserId();
+       Task<UserEntity> Login(string username, string password);
     }
 }

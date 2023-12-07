@@ -1,0 +1,513 @@
+﻿<html lang="en">
+
+<head>
+    @section scripts {
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+        <script type="text/javascript">
+
+            //Submit function
+            function Save() {
+                if ($('#FirstName').val() === "") {
+                    $("#firstname_notif").show();
+                    return false;
+                } else {
+                    $("#firstname_notif").hide();
+                }
+
+                if ($('#LastName').val() === "") {
+                    $("#lastname_notif").show();
+                    return false;
+                } else {
+                    $("#lastname_notif").hide();
+                }
+
+                if ($('#UserName').val() === "") {
+                    $("#username_notif").show();
+                    return false;
+                } else {
+                    $("#username_notif").hide();
+                }
+
+                if ($('#EmailId').val() === "") {
+                    $("#email_notif").show();
+                    return false;
+                } else {
+                    $("#email_notif").hide();
+                }
+
+                if ($('#PhoneNumber').val() === "") {
+                    $("#phone_notif").show();
+                    return false;
+                } else {
+                    $("#phone_notif").hide();
+                }
+
+                if ($('#Dob').val() === "") {
+                    $("#dob_notif").show();
+                    return false;
+                } else {
+                    $("#dob_notif").hide();
+                }
+
+                if ($('#Password').val() === "") {
+                    $("#password_notif").show();
+                    return false;
+                } else {
+                    $("#password_notif").hide();
+                }
+
+                if ($('#ConfirmPassword').val() === "") {
+                    $("#confirmpassword_notif").show();
+                    return false;
+                } else {
+                    $("#confirmpassword_notif").hide();
+                }
+                if ($('#ConfirmPassword').val() != $('#Password').val()) {
+                    $("#matchpassword_notif").show();
+                    return false;
+                } else {
+                    $("#matchpassword_notif").hide();
+                }
+
+                if ($('#City').val() === "") {
+                    $("#city_notif").show();
+                    return false;
+                } else {
+                    $("#city_notif").hide();
+                }
+
+                if ($('#State').val() === "") {
+                    $("#state_notif").show();
+                    return false;
+                } else {
+                    $("#state_notif").hide();
+                }
+
+                if ($('#ZipCode').val() === "") {
+                    $("#zip_notif").show();
+                    return false;
+                } else {
+                    $("#zip_notif").hide();
+                }
+
+                if ($('#Country').val() === "") {
+                    $("#country_notif").show();
+                    return false;
+                } else {
+                    $("#country_notif").hide();
+                }
+
+
+                var userInfo = new Object();
+                userInfo.FirstName = $('#FirstName').val();
+                userInfo.LastName = $('#LastName').val();
+                userInfo.UserName = $('#UserName').val();
+                userInfo.EmailId = $('#EmailId').val();
+                userInfo.PhoneNumber = $('#PhoneNumber').val();
+                userInfo.Dob = $('#Dob').val();
+                userInfo.Gender = $('#Gender').val();
+                userInfo.Password = $('#Password').val();
+                userInfo.ConfirmPassword = $('#ConfirmPassword').val();
+                userInfo.AddressLine1 = $('#AddressLine1').val();
+                userInfo.AddressLine2 = $('#AddressLine2').val();
+                userInfo.LandMark = $('#LandMark').val();
+                userInfo.City = $('#City').val();
+                userInfo.State = $('#State').val();
+                userInfo.ZipCode = $('#ZipCode').val();
+                userInfo.Country = $('#Country').val();
+
+                $.ajax({
+                    url: "/User/CreateUser",
+                    type: 'POST',
+                    dataType: "json",
+                    data: userInfo,
+                    success: function (response) {
+                        if (response.message === "User created") {
+                            window.location.href = "/Home/Index";
+                        } else {
+                            alert("Invalid Input");
+                        }
+                    },
+                    error: function (errormessage) {
+                        alert(errormessage.responseText);
+                    }
+                });
+            }
+
+        </script>
+    }
+</head>
+<body>
+<!-- App container starts -->
+<div class="app-container">
+
+    <!-- App header starts -->
+    <div class="app-header d-flex align-items-center">
+
+        <!-- Toggle buttons start -->
+        <div class="d-flex">
+            <button class="btn btn-outline-primary me-2 toggle-sidebar" id="toggle-sidebar">
+                <i class="bi bi-chevron-left fs-5" id="toggle-icon-btn"></i>
+            </button>
+            <button class="btn btn-outline-primary me-2 pin-sidebar" id="pin-sidebar">
+                <i class="bi bi-chevron-left fs-5" id="icon-btn"></i>
+            </button>
+        </div>
+        <!-- Toggle buttons end -->
+        <!-- App brand sm start -->
+        <div class="app-brand-sm d-md-none d-sm-block">
+            <a href="index.html">
+                <img src="~/images/NoorFood.png" class="logo" alt="img-logo">
+            </a>
+        </div>
+        <!-- App brand sm end -->
+        <!-- App header actions start -->
+        <div class="header-actions">
+            <div class="d-lg-block d-none me-2">
+            </div>
+
+            <div class="dropdown ms-3">
+                <a id="userSettings"
+                   class="dropdown-toggle d-flex py-2 align-items-center text-decoration-none" href="#!"
+                   role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="d-none d-md-block me-2">Noor Food</span>
+                    <img src="~/images/profile.avif" class="rounded-circle img-3x"
+                         alt="Bootstrap Gallery" />
+                </a>
+                <div class="dropdown-menu dropdown-menu-end shadow">
+                    <a class="dropdown-item d-flex align-items-center" href="profile.html">
+                        <i class="bi bi-person fs-4 me-2"></i>Profile
+                    </a>
+
+                    <a class="dropdown-item d-flex align-items-center" href="https://snmatrix.com/noorfoodandagriculture/noorfood" onclick="myFunction()">
+                        <i class="bi bi-escape fs-4 me-2"></i>Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- App header actions end -->
+
+    </div>
+    <!-- App header ends -->
+    <!-- App hero header starts -->
+    <div class="app-hero-header d-none">
+        <!-- <h5 class="fw-light">Sell,</h5> -->
+        <h2 class="">Add User</h2>
+    </div>
+    <!-- App Hero header ends -->
+    <!-- App body starts -->
+    <div class="app-body h-100 mt-0">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="userdetail-tab" data-bs-toggle="tab"
+                        data-bs-target="#userdetail" type="button" role="tab" aria-controls="userdetail"
+                        aria-selected="true">
+                    Add User
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="userlist-tab" data-bs-toggle="tab" data-bs-target="#userlist"
+                        type="button" role="tab" aria-controls="userlist" aria-selected="false">
+                    User
+                    list
+                </button>
+            </li>
+
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="userdetail" role="tabpanel"
+                 aria-labelledby="userdetail-tab">
+                <div class="row">
+                    <div class="col-xxl-12">
+                        <div class="card shadow mb-4">
+                            <!-- <div class="card-header">
+                                <h4>User Details</h4>
+
+                            </div> -->
+                                <form method="post" id="adduser" action="/AddUser">
+                                    <div class="card-body">
+
+                                        <div class="row">
+                                            <div class="col-lg-6  col-12">
+                                                <div class="mb-3">
+                                                    <label class="form-label">First Name</label>
+                                                    <input type="text" pattern="" required name="fname"
+                                                           class="form-control" id="FirstName" placeholder="Enter First Name">
+                                                    <div id="firstname_notif" style="display:none;color:green;">Please enter First name</div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6  col-12">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Last Name</label>
+                                                    <input name="lname" required type="text" class="form-control" id="LastName"
+                                                           placeholder="Enter Last Name">
+                                                    <div id="lastname_notif" style="display:none;color:green;">Please enter Last name</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6  col-12">
+                                                <div class="mb-3">
+
+                                                    <label class="form-label">User Name</label>
+                                                    <input type="text" required name="UserName" class="form-control" id="UserName"
+                                                           placeholder="Enter Login Name">
+                                                    <div id="username_notif" style="display:none;color:green;">Please enter User name</div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6  col-12">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Email</label>
+                                                    <input type="email" required name="email" class="form-control" id="EmailId"
+                                                           placeholder="Enter Email">
+                                                    <div id="email_notif" style="display:none;color:green;">Please enter Email</div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6  col-12">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Phone Number</label>
+                                                    <input type="number" required name="phoneNumber"
+                                                           class="form-control" id="PhoneNumber" placeholder="Enter phone number">
+                                                    <div id="phone_notif" style="display:none;color:green;">Please enter Phone Number</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6  col-12">
+                                                <div class="mb-3">
+
+                                                    <label class="form-label">Dob</label>
+                                                    <input type="date" required name="dob" class="form-control" id="Dob"
+                                                           placeholder="Enter Dob">
+                                                    <div id="dob_notif" style="display:none;color:green;">Please enter Date of Birth</div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6  col-12">
+                                                <div class="mb-3 d-flex align-items-center h-100" style="gap:10px">
+                                                    <label class="form-label m-0">Gender</label>
+
+                                                    <input type="radio" checked id="Gender" name="gender"
+                                                           value="male" /> Male
+                                                    <input type="radio" id="gender" name="gender" value="female" />
+                                                    Female
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6  col-12">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Password</label>
+                                                    <input type="password" required name="password" class="form-control" id="Password"
+                                                           placeholder="Enter password">
+                                                    <div id="password_notif" style="display:none;color:green;">Please enter Password</div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6  col-12">
+                                                <div class="mb-3">
+
+                                                    <label class="form-label">Confirm-Password</label>
+                                                    <input type="password" required name="cPassword"
+                                                           class="form-control" id="ConfirmPassword" placeholder="Enter confirm password">
+                                                    <div id="confirmpassword_notif" style="display:none;color:green;">Please confirm Password</div>
+                                                    <div id="matchpassword_notif" style="display:none;color:green;">Passworddo not match</div>
+
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6  col-12">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Address1</label>
+                                                    <input type="text" required name="address1" class="form-control" id="AddressLine1"
+                                                           placeholder="Enter Address1">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6  col-12">
+                                                <div class="mb-3">
+
+                                                    <label class="form-label">Address2</label>
+                                                    <input type="text" required name="address2" class="form-control" id="AddressLine2"
+                                                           placeholder="Enter Address2">
+
+
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6  col-12">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Landmark</label>
+                                                    <input type="text" required name="landmark" class="form-control" id="LandMark"
+                                                           placeholder="Enter landmark">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6  col-12">
+                                                <div class="mb-3">
+                                                    <label class="form-label">City</label>
+                                                    <input type="text" required name="city" class="form-control" id="City"
+                                                           placeholder="Enter city">
+                                                    <div id="city_notif" style="display:none;color:green;">Please enter City</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6  col-12">
+                                                <div class="mb-3">
+                                                    <label class="form-label">State</label>
+                                                    <input type="text" required name="state" class="form-control" id="State"
+                                                           placeholder="Enter state">
+                                                    <div id="state_notif" style="display:none;color:green;">Please enter State</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6  col-12">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Zip Code</label>
+                                                    <input type="number" required name="zip" class="form-control" id="ZipCode"
+                                                           placeholder="Enter zip code">
+                                                    <div id="zip_notif" style="display:none;color:green;">Please enter ZipCode</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6  col-12">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Country</label>
+                                                    <input type="text" required name="Country" class="form-control" id="Country"
+                                                           placeholder="Enter Country">
+                                                    <div id="country_notif" style="display:none;color:green;">Please enter Country</div>
+                                                </div>
+                                            </div>
+
+                                            <div class="card-footer">
+                                                <div class="d-flex gap-2 justify-content-end  align-items-center">
+                                                    <button type="submit" class="btn btn-outline-primary btn-lg" id="btnAdd" onclick=" Save();">
+                                                        Save
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                </form>
+                            </div>
+
+                    </div>
+                    <!-- App body ends -->
+
+
+                </div>
+            </div>
+            <div class="tab-pane fade" id="userlist" role="tabpanel" aria-labelledby="userlist-tab">
+                <!-- USER LIST content goes here -->
+                <div class="row">
+                    <div class="col-xxl-12">
+                        <div class="card shadow mb-4">
+                            <!-- <div class="card-header">
+                                <h4>User Details</h4>
+
+                            </div> -->
+                            <form method="post" id="user" action="/user">
+                                <div class="card-body">
+
+
+
+
+                                    <div class=" card-border p-2 mt-4">
+                                        <div class="row">
+                                            <div class="col-8 col-lg-3 ">
+                                                <div class="d-flex">
+                                                    <input type="text" class="form-control"
+                                                           placeholder="Search">
+                                                    <button class="btn btn-primary" type="button">
+                                                        <i class="bi bi-search fs-5"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4 col-lg-9">
+                                                <div class="d-flex align-items-center justify-content-end">
+                                                    <a title="PDF" class="px-1" href="#">
+                                                        <i class="bi bi-file-pdf-fill"
+                                                           style="color:red; font-size: 24px"></i>
+                                                    </a>
+                                                    <a title="EXCEL" href="#">
+                                                        <i class="bi bi-file-earmark-spreadsheet-fill"
+                                                           style="color:green; font-size: 24px"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="d-flex justify-content-center table-data-js mt-3">
+                                            <!-- <hr> -->
+                                            <div class="table-responsive p-0 w-100">
+                                                <table id="table-sell" class="table table-striped m-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="font-weight: 600;">Name</th>
+                                                            <th style="font-weight: 600;">Address</th>
+                                                            <th style="font-weight: 600;">Phone No.</th>
+                                                            <th style="font-weight: 600;">Email</th>
+                                                            <th style="font-weight: 600;">Dop</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Harshit</td>
+                                                            <td>New Delhi</td>
+                                                            <td>9912345678</td>
+                                                            <td>xyz@gmail.com</td>
+                                                            <td>23-10-2023</td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+
+                                                <nav aria-label="Page navigation example">
+                                                    <ul class="pagination justify-content-end mt-3 fw-bold">
+                                                        <li class="page-item">
+                                                            <a class="page-link"
+                                                               href="#">Previous</a>
+                                                        </li>
+                                                        <li class="page-item">
+                                                            <a class="page-link"
+                                                               href="#">1</a>
+                                                        </li>
+                                                        <li class="page-item">
+                                                            <a class="page-link"
+                                                               href="#">2</a>
+                                                        </li>
+                                                        <li class="page-item">
+                                                            <a class="page-link"
+                                                               href="#">3</a>
+                                                        </li>
+                                                        <li class="page-item">
+                                                            <a class="page-link"
+                                                               href="#">Next</a>
+                                                        </li>
+                                                    </ul>
+                                                </nav>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                    <!-- App body ends -->
+
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="app-footer position-fixed bottom-0  w-100 " style="background-color: #e9edf2;">
+            <h6>© Snmatrix 2023</h6>
+        </div>
+        <!-- App container ends -->
+    </div>
+    <!-- App container ends -->
+</div>
+<!-- App body ends -->
+</body>
+</html>
