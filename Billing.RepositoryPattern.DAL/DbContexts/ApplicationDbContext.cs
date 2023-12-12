@@ -52,6 +52,11 @@ namespace Billing.RepositoryPattern.InfraStructure
             get;
             set;
         }
-       
-    }
+
+		public DbSet<CustomerBillEntity> CustomerBill
+		{
+			get;
+			set;
+		}
+	}
 }

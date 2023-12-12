@@ -8,7 +8,7 @@ namespace Billing.RepositoryPattern.Api.Dtos
     public class BillingInfoDto
     {
         public int BillingId { get; set; }
-        public string CustomerId { get; set; }
+        public int CustomerId { get; set; }
         public string PaymentType { get; set; }
         public decimal Price { get; set; }
         public string UserID { get; set; }

@@ -9,6 +9,9 @@ namespace Billing.RepositoryPattern.Api.Services.ProductService
     {
        public Task<IEnumerable<ProductsEntity>> GetAll();
         public Task AddProduct(ProductDto product);
-    
-    }
+
+        public Task<List<ProductsEntity>> GetProductNameWithId(int ProductId);
+
+
+	}
 }

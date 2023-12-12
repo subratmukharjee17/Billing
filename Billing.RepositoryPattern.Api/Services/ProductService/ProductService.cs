@@ -36,5 +36,7 @@ namespace Billing.RepositoryPattern.Api.Services.ProductService
         public async Task<IEnumerable<ProductsEntity>> GetAll()
             => await _unitOfWork.ProductRepository.GetAllAsync();
 
-    }
+		public async Task<List<ProductsEntity>> GetProductNameWithId(int ProductId)
+			=> await _unitOfWork.ProductRepository.GetProductNameWithId(ProductId);
+	}
 }

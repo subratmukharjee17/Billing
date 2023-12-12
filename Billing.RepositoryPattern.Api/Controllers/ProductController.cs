@@ -27,10 +27,12 @@ namespace Billing.RepositoryPattern.Api.Controllers
             await _productService.GetAll();
 
 
-        [HttpPost("AddSale")]
-        public async Task AddSales([FromBody] ProductDto Product) =>
-            await _productService.AddProduct(Product);
+        //[HttpPost("AddSale")]
+        //public async Task AddSales([FromBody] ProductDto Product) =>
+        //    await _productService.AddProduct(Product);
 
-
-    }
+		[HttpGet("GetProductNameWithId")]
+		public async Task<List<ProductsEntity>> GetProductNameWithId(int ProductId) =>
+		  await _productService.GetProductNameWithId(ProductId);
+	}
 }

@@ -14,6 +14,14 @@ namespace Billing.RepositoryPattern.InfraStructure
         public ProductRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
 
-        }
-    }
+			
+		}
+
+		public async Task<List<ProductsEntity>> GetProductNameWithId(int ProductId)
+		{
+			var result = _dbContext.Product.Where(x => x.ProductId.Equals(ProductId)).ToList();
+			return await Task.FromResult(result);
+		}
+
+	}
 }

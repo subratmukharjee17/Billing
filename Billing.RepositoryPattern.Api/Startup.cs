@@ -14,6 +14,7 @@ using System.Net.Http;
 using Billing.RepositoryPattern.Api.Services.ProductService;
 using Billing.RepositoryPattern.Api.Services.BillingService;
 using System.Text.Json.Serialization;
+using Billing.RepositoryPattern.Api.Services.CustomerBill;
 
 namespace Billing.RepositoryPattern.Api
 {
@@ -50,7 +51,8 @@ namespace Billing.RepositoryPattern.Api
             services.AddTransient(typeof(ISalesService), typeof(SalesService));
             services.AddTransient(typeof(IProductService), typeof(ProductService));
             services.AddTransient(typeof(IBillingService), typeof(BillingService));
-        }
+			services.AddTransient(typeof(ICustomerBillService), typeof(CustomerBillService));
+		}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

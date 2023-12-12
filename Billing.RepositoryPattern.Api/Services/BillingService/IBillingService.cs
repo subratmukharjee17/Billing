@@ -11,6 +11,10 @@ namespace Billing.RepositoryPattern.Api.Services.BillingService
     {
       public Task<IEnumerable<BillingInfoEntity>> GetAll();
        public Task AddBillingInfo(BillingInfoDto billinfo);
-   
-    }
+
+		public  Task<int> GetMaxBillingId();
+
+        public  Task<List<BillingInfoEntity>> GetFilteredBillingInfo(int BillId);
+
+	}
 }
