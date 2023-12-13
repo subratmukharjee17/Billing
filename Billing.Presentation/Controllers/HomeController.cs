@@ -43,6 +43,7 @@ namespace Billing.Presentation.Controllers
             var responseContent = await response.Content.ReadAsStringAsync();
             var menu = (List<MainMenu>)Newtonsoft.Json.JsonConvert.DeserializeObject(responseContent, typeof(List<MainMenu>));
 
+
             return View();
         }
 
