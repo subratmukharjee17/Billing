@@ -468,7 +468,7 @@
 			// Simulate fetching data from the server (replace with your actual AJAX call)
 			var billid=$("#BillingId").text();
 			$.ajax({
-				url: '/Home/GetBillData',
+				url: '/Sales/GetBillData',
 				method: "GET",
 				data: { BillID: billid },
 				dataType: "json",
@@ -621,7 +621,7 @@
 
 	function updateRate(selectedProduct) {
 		$.ajax({
-			url: '/Home/GetProductRate',
+			url: '/Sales/GetProductRate',
 			method: 'GET',
 			data: { productName: selectedProduct },
 			dataType: 'json',

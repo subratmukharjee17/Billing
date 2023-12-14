@@ -31,5 +31,13 @@ namespace Billing.RepositoryPattern.Api.Controllers
 		public async Task AddCustomerAndBillingInfo([FromBody] SalesDto sales) =>
 			await _salesService.AddCustomerAndBillingInfo(sales);
 
+
+		[HttpGet("GetFilteredSales")]
+		public async Task<IEnumerable<SalesDetailsEntity>> GetFilteredSales(int BillId) =>
+			await _salesService.GetFilteredSales(BillId);
+
+        [HttpGet("GetSalesDataByParameters")]
+        public async Task<List<SalesDetailsEntity>> GetSalesDataByParameters(string fromdate, string todate, string period)
+            => await _salesService.GetSalesDataByParameters(fromdate, todate, period);
 	}
 }

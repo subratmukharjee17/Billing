@@ -6,6 +6,7 @@ namespace Billing.RepositoryPattern.Domain.Interfaces
 {
     public interface IBillingInfoRepository : IGenericRepository<BillingInfoEntity>
     {
-        //Task<List<SubMenuEntity>> GetAllSubMenusByMenuId(int MenuId, int RoleId);
-    }
+		Task<int> GetMaxBillingIdAsync();
+		Task<List<BillingInfoEntity>> GetFilteredBillingInfo(int BillId);
+	}
 }

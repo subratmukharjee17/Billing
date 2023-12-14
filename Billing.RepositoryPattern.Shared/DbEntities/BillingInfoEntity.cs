@@ -17,8 +17,7 @@ namespace Billing.RepositoryPattern.Domain.DbEntities
 
         [ForeignKey("Customers")]
         [Required(ErrorMessage = "CustomerId is required")]
-        public string CustomerId { get; set; }
-        
+        public int CustomerId { get; set; }        
         public virtual CustomersEntity Customers { get; set; }  
 
         [Required(ErrorMessage = "PaymentType is required")]

@@ -12,7 +12,11 @@ namespace Billing.RepositoryPattern.Api.Services.SalesService
        public Task<IEnumerable<SalesDetailsEntity>> GetAll();
         public Task AddSales(SalesDto sales);
 
-        public Task AddCustomerAndBillingInfo(SalesDto sales);
-   
-    }
+        public Task<string> AddCustomerAndBillingInfo(SalesDto sales);
+
+		public Task<List<SalesDetailsEntity>> GetFilteredSales(int BillId);
+
+        public Task<List<SalesDetailsEntity>> GetSalesDataByParameters(string fromdate, string todate, string period);
+
+	}
 }

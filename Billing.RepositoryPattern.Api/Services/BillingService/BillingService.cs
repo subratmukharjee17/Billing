@@ -39,5 +39,12 @@ namespace Billing.RepositoryPattern.Api.Services.BillingService
         public async Task<IEnumerable<BillingInfoEntity>> GetAll()
             => await _unitOfWork.BillingInfoRepository.GetAllAsync();
 
-    }
+		public async Task<int> GetMaxBillingId()
+		{
+			return await _unitOfWork.BillingInfoRepository.GetMaxBillingIdAsync();
+		}
+
+		public async Task<List<BillingInfoEntity>> GetFilteredBillingInfo(int BillId)
+            => await _unitOfWork.BillingInfoRepository.GetFilteredBillingInfo(BillId);
+	}
 }

@@ -91,9 +91,10 @@
 
                                     <label class="form-label">Report By</label>
                                     <select class="form-select" id="ReportBy">
-                                        <option value="0">Weekly</option>
-                                        <option value="1">Monthly</option>
-                                        <option value="2">Daily</option>
+                                        <option value="-Select">-Select</option>
+                                        <option value="Weekly">Weekly</option>
+                                        <option value="Monthly">Monthly</option>
+                                        <option value="Daily">Daily</option>
                                     </select>
 
                                 </div>
@@ -101,7 +102,7 @@
 
                             <div class="col-lg-2 col-12 ">
                                 <div class="d-flex justify-content-end mt-4 ">
-                                    <button type="button" id="SearchBtn" class="btn btn-primary btn-lg px-4 btn-save-table-data w-100 w-lg-75">
+                                    <button type="button" id="SearchBtn"  class="btn btn-primary btn-lg px-4 btn-save-table-data w-100 w-lg-75">
                                         Search
                                     </button>
 
@@ -200,6 +201,25 @@
 
 </div>
 
+<div class="modal fade" id="validationModal" tabindex="-1" role="dialog" aria-labelledby="validationModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="validationModalLabel">Validation Error</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Please fill in at least one date field or select a valid report type.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Include DataTables CSS and JS -->
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
@@ -211,11 +231,16 @@
         // Attach click event handler to the anchor link
 
         $("#SearchBtn").click(function (e) {
-            debugger;
+         //  debugger;
             e.preventDefault();
             var FromDate = $("#FromDate").val();
             var ToDate = $("#ToDate").val();
             var ReportBy = $("#ReportBy").val();
+            if (!FromDate && !ToDate && ReportBy === "-Select") {
+              //  $('#validationModal').modal('show');
+                alert('Please fill in at least one date field or select a valid report type.');
+            }
+            else{
             // Perform AJAX request
             $.ajax({
                 url: '/Product/GetSalesData',
@@ -245,28 +270,67 @@
                     console.error("AJAX request failed", status, error);
                 }
             });
+
+            }
         });
         $("#pdfLink, #ExcelLink").click(function (e) {
-            debugger;
+          //  debugger;
             e.preventDefault(); 
             var FromDate=$("#FromDate").val();
             var ToDate = $("#ToDate").val();
+            var ReportBy = $("#ReportBy").val();
             var reportType = $(this).attr("id") === "pdfLink" ? "PDF" : "Excel";
             // Perform AJAX request
             $.ajax({
                 url: '/Product/GetSalesReport', 
                 method: "GET",
-                data: { FromDate: FromDate, ToDate: ToDate, reportType: reportType },
-                dataType: "json", 
-                success: function (data) {
-                    // Handle the success response
-                    console.log("AJAX request successful", data);
+                data: { FromDate: FromDate, ToDate: ToDate, ReportBy: ReportBy, reportType: reportType },
+                dataType: "text",
+                success: function (data, status, xhr) {
+                    var contentType = xhr.getResponseHeader('Content-Type');
+
+                    if (contentType === 'application/json') {
+                        // Handle JSON response (if needed)
+                       // console.log("Received JSON response", data);
+                    } else if (contentType === 'application/vnd.ms-excel') {
+                        // Handle Excel response
+                        console.log("Received Excel response");
+
+                        // Create a Blob from the response data
+                        var blob = new Blob([data], { type: contentType });
+                        var currentDate = new Date();
+                        var formattedDate = currentDate.toISOString().slice(0, 19).replace(/:/g, '-');
+                        var fileName = 'SalesData_' + formattedDate + '.xls';
+
+                        // Create a link element and trigger a click to download the file
+                        var link = document.createElement('a');
+                        link.href = window.URL.createObjectURL(blob);
+                        link.download = fileName; // Specify the desired file name
+                        link.click();
+                    } else {
+                        // Handle other content types or error cases
+                        console.error("Unexpected content type", contentType);
+                    }
                 },
-                error: function (xhr, status, error) {
-                    // Handle the error response
-                    console.error("AJAX request failed", status, error);
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error('AJAX Error:', textStatus, errorThrown);
+                    console.log(jqXHR.responseText); // Log the full response for debugging
                 }
             });
         });
+
+        //function validateForm() {
+        //    var fromDate = document.getElementById("FromDate").value;
+        //    var toDate = document.getElementById("ToDate").value;
+        //    var reportBy = document.getElementById("ReportBy").value;
+
+        //    if (!fromDate && !toDate && reportBy === "-Select") {
+        //        // Show the Bootstrap modal
+        //        $('#validationModal').modal('show');
+        //    } else {
+        //        // Perform the rest of your form submission logic
+        //        // ...
+        //    }
+        //}
     });
 </script>

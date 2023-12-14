@@ -28,6 +28,12 @@ namespace Billing.RepositoryPattern.Api.Controllers
         public async Task AddBillingInfo([FromBody] BillingInfoDto billingInfo) =>
             await _billingService.AddBillingInfo(billingInfo);
 
-  
-    }
+		[HttpGet("GetMaxBillingId")]
+		public async Task<int> GetMaxBillingIdAsync() => await _billingService.GetMaxBillingId();
+
+
+		[HttpGet("GetFilteredBillingInfo")]
+		public async Task<List<BillingInfoEntity>> GetFilteredBillingInfo(int BillId) =>
+			await _billingService.GetFilteredBillingInfo(BillId);
+	}
 }

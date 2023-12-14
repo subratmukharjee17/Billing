@@ -7,6 +7,7 @@ using Billing.RepositoryPattern.InfraStructure.UnitOfWork;
 using System.Linq;
 using System;
 using Billing.RepositoryPattern.InfraStructure.Repositories;
+using Newtonsoft.Json;
 
 namespace Billing.RepositoryPattern.Api.Services.SalesService
 {
@@ -18,7 +19,7 @@ namespace Billing.RepositoryPattern.Api.Services.SalesService
             _unitOfWork = unitOfWork;
         }
 
-		public async Task AddCustomerAndBillingInfo(SalesDto salesDetails)
+		public async Task<string> AddCustomerAndBillingInfo(SalesDto salesDetails)
 		{
 			var customer = new CustomersEntity
 			{
@@ -32,9 +33,9 @@ namespace Billing.RepositoryPattern.Api.Services.SalesService
 
 			var billing = new BillingInfoEntity
 			{
-				BillingId = salesDetails.BillingId,
+				//BillingId = salesDetails.BillingId,
 				UserID = salesDetails.UserID,
-				CustomerId = Convert.ToString(customer.CustomerId),
+				CustomerId = customer.CustomerId,
 				PaymentType = salesDetails.PaymentType,
 				Price = salesDetails.Price,
 				CreatedBy = salesDetails.CreatedBy,
@@ -43,13 +44,19 @@ namespace Billing.RepositoryPattern.Api.Services.SalesService
 
 			_unitOfWork.BillingInfoRepository.Add(billing);
 			await _unitOfWork.CommitAsync();
+
+			// Retrieve the generated BillingId from the database
+			var generatedBillingId = billing.BillingId;
+
+			var jsonResult = JsonConvert.SerializeObject(generatedBillingId);
+			return jsonResult;
 		}
 
 		public async Task AddSales(SalesDto salesDetails)
 		{
 			var sales = new SalesDetailsEntity
 			{
-				SaleDate = salesDetails.SaleDate,
+				SaleDate = DateTime.Now,
 				BillingId = salesDetails.BillingId,
 				ProductId = salesDetails.ProductId,
 				Quantity = salesDetails.Quantity,
@@ -59,64 +66,17 @@ namespace Billing.RepositoryPattern.Api.Services.SalesService
 			_unitOfWork.SalesDetailsRepository.Add(sales);
 			await _unitOfWork.CommitAsync();
 		}
-		//public async Task AddSales(SalesDto salesDto)
-  //      {
-		//	var customer = new CustomersEntity
-		//	{
-		//		CustomerId = salesDto.CustomerId,
-		//		CustomerName = salesDto.CustomerName,
-		//		PhoneNo = salesDto.PhoneNo
-		//	};
-
-		//	_unitOfWork.CustomerRepository.Add(customer);
-		//	await _unitOfWork.CommitAsync();
-		//	var Billing = new BillingInfoEntity
-		//	{
-		//		BillingId = salesDto.BillingId,
-		//		UserID = salesDto.UserID,
-		//		CustomerId = Convert.ToString(customer.CustomerId), // Convert.ToString(salesDto.CustomerId),
-		//		PaymentType = salesDto.PaymentType,
-		//		Price = salesDto.Price,
-		//		CreatedBy = salesDto.CreatedBy,
-		//		CreatedDate = DateTime.Now
-		//	};
-		//	_unitOfWork.BillingInfoRepository.Add(Billing);
-		//	await _unitOfWork.CommitAsync();
-
-		//	//may be multipul entries will come for salesdetails
-		//	var sales = new SalesDetailsEntity
-  //          {
-  //              //  SalesId=salesDto.SalesId,
-  //              SaleDate = salesDto.SaleDate,
-  //              BillingId = Billing.BillingId,//salesDto.BillingId,
-  //              ProductId = salesDto.ProductId,
-  //              Quantity = salesDto.Quantity,
-  //              Amount = salesDto.Amount
-
-  //          };
-			
-		//	_unitOfWork.SalesDetailsRepository.Add(sales);
-
-		//	//foreach (var salesEntry in salesDto)
-		//	//{
-		//	//	var sales = new SalesDetailsEntity
-		//	//	{
-		//	//		SaleDate = salesDto.SaleDate,
-		//	//		BillingId = salesDto.BillingId,
-		//	//		ProductId = salesEntry.ProductId,
-		//	//		Quantity = salesEntry.Quantity,
-		//	//		Amount = salesEntry.Amount
-		//	//	};
-
-		//	//	_unitOfWork.SalesDetailsRepository.Add(sales);
-		//	//}
-
-		//	await _unitOfWork.CommitAsync();
-  //      }
+		
 
         public async Task<IEnumerable<SalesDetailsEntity>> GetAll()
             => await _unitOfWork.SalesDetailsRepository.GetAllAsync();
 
-     
-    }
+
+		public async Task<List<SalesDetailsEntity>> GetFilteredSales(int BillId)
+			=> await _unitOfWork.SalesDetailsRepository.GetFilteredSales(BillId);
+
+		public async Task<List<SalesDetailsEntity>> GetSalesDataByParameters(string fromdate, string todate, string period)
+            => await _unitOfWork.SalesDetailsRepository.GetSalesDataByParameters(fromdate, todate, period);
+
+	}
 }

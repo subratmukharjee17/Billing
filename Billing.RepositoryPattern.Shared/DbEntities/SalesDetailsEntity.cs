@@ -13,10 +13,9 @@ namespace Billing.RepositoryPattern.Domain.DbEntities
         [Column("SalesId")]
         public int SalesId { get; set; }
 
-        [ForeignKey("ProductId")]
+        [ForeignKey("Products")]
         [Required(ErrorMessage = "ProductId is required")]
         public int ProductId { get; set; }
-
         public virtual ProductsEntity Products  { get; set; }
 
         [Required(ErrorMessage = "Quantity is required")]
@@ -31,7 +30,6 @@ namespace Billing.RepositoryPattern.Domain.DbEntities
 
         [ForeignKey("BillingInfo")]
         public int BillingId { get; set; }
-
         public virtual BillingInfoEntity BillingInfo { get; set; }
     }
 }

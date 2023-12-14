@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using PdfSharp.Drawing;
 using PdfSharp.Fonts;
 using PdfSharp.Pdf;
+using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Text;
 
 namespace Billing.Presentation.Controllers
@@ -21,11 +23,17 @@ namespace Billing.Presentation.Controllers
         public async Task<IActionResult> GetSalesData(string FromDate, string ToDate, string ReportBy)
         {
 
+			//DateTime fromDate = DateTime.ParseExact(FromDate, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+			//DateTime toDate = DateTime.ParseExact(ToDate, "dd-MM-yyyy", CultureInfo.InvariantCulture);
 
-            string apiUrl = "http://localhost:36942/api/Sales/GetAll";
-            // User user = new User();
+			string apiUrl = "http://localhost:36942/api/Sales/GetSalesDataByParameters";
 
-            using (HttpClient client = new HttpClient())
+			apiUrl += $"?fromdate={FromDate}&todate={ToDate}&period={ReportBy}";
+
+			//string apiUrl = "http://localhost:36942/api/Sales/GetAll";
+			// User user = new User();
+
+			using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(apiUrl);
                 client.DefaultRequestHeaders.Accept.Clear();
@@ -46,9 +54,12 @@ namespace Billing.Presentation.Controllers
             return View();
 
         }
-        public async Task<IActionResult> GetSalesReport(string FromDate, string ToDate, string reportType)
+        public async Task<IActionResult> GetSalesReport(string FromDate, string ToDate, string ReportBy,  string reportType)
         {
-            string apiUrl = "http://localhost:36942/api/Sales/GetAll";
+            string apiUrl = "http://localhost:36942/api/Sales/GetSalesDataByParameters";
+
+            apiUrl += $"?fromdate={FromDate}&todate={ToDate}&period={ReportBy}";
+          //  string apiUrl = "http://localhost:36942/api/Sales/GetAll";
             // User user = new User();
 
             using (HttpClient client = new HttpClient())
@@ -61,14 +72,15 @@ namespace Billing.Presentation.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     var data = await response.Content.ReadAsStringAsync();
-                    var table = Newtonsoft.Json.JsonConvert.DeserializeObject<System.Data.DataTable>(data);
-                    if(reportType=="PDF")
+                    //    var table = Newtonsoft.Json.JsonConvert.DeserializeObject<System.Data.DataTable>(data);
+                    var salesData = Newtonsoft.Json.JsonConvert.DeserializeObject<List<SalesDetails>>(data);
+                    if (reportType=="PDF")
                     {
-                        return ExportToPdf(table);
+                       // return ExportToPdf(table);
                     }
                     else
                     {
-                          return ExportToExcel(table);
+                        return  ExportToExcel(salesData);
                     }
 
 
@@ -79,59 +91,24 @@ namespace Billing.Presentation.Controllers
             return View();
         }
 
-        public ActionResult ExportToExcel(DataTable salesdata)
+        public IActionResult ExportToExcel(List<SalesDetails> salesData)
         {
+            var excelContent = GenerateExcelContent(salesData);
 
-            var data = salesdata;// Enumerable.Empty<SalesDetails>();
-            //if (!string.IsNullOrEmpty(date))
+            // Return the Excel file as a response
+            var result = File(excelContent, "application/vnd.ms-excel", "SalesData.xls");
             //{
-            //    DateTime? Fdt = Convert.ToDateTime(date).Date;
-            //    int selectedYear = Fdt.Value.Year;
-            //    int selectedMonth = Fdt.Value.Month;
-            //  //  data = db.MHEPLSCMDatas.Where(x => x.UploadDate.Month == selectedMonth && x.UploadDate.Year == selectedYear && x.Source == "SAP").ToList();
-            //}
-
-            // var data = db.MHEPLSCMDatas.Where(x => x.UploadDate == Fdt).ToList();         
-            string location = "SalesReport";
-            string currentDateTime = DateTime.Now.ToString("yyyyMMdd_HHmmss");
-            string extension = ".xls";
-            string filename = $"{location}_{currentDateTime}{extension}";
-
-
-            var salesDetailsList = new List<SalesDetails>();
-
-            foreach (DataRow row in salesdata.Rows)
-            {
-                var salesDetails = new SalesDetails
-                {
-                    //BillNo = Convert.ToInt64(row["BillNo"]),
-                    //ProductId = Convert.ToInt16(row["ProductId"]),
-                    //Quantity = Convert.ToDecimal(row["Quantity"]),
-                    //Amount = Convert.ToDecimal(row["Amount"])
-                };
-
-                salesDetailsList.Add(salesDetails);
-            }
-            // Create the Excel file
-            var fileContents = GenerateExcelFile(salesDetailsList);
-
-            // Return the file as a response
-            var result = new FileContentResult(fileContents, "application/vnd.ms-excel")
-            {
-                FileDownloadName = filename
-                //FileDownloadName = "testing1234.xls"
-            };
+            //    FileDownloadName = "SalesData.xls"
+            //};
 
             return result;
-
         }
 
-
-
-        private byte[] GenerateExcelFile(IEnumerable<SalesDetails> data)
+        private byte[] GenerateExcelContent(List<SalesDetails> data)
         {
             var excelContent = new StringBuilder();
 
+            // Excel header
             excelContent.AppendLine("<?xml version=\"1.0\"?>");
             excelContent.AppendLine("<Workbook xmlns=\"urn:schemas-microsoft-com:office:spreadsheet\"");
             excelContent.AppendLine("xmlns:ss=\"urn:schemas-microsoft-com:office:spreadsheet\">");
@@ -164,6 +141,7 @@ namespace Billing.Presentation.Controllers
                 excelContent.AppendLine("</Row>");
             }
 
+            // Excel footer
             excelContent.AppendLine("</Table>");
             excelContent.AppendLine("</Worksheet>");
             excelContent.AppendLine("</Workbook>");
@@ -175,24 +153,25 @@ namespace Billing.Presentation.Controllers
             return excelBytes;
         }
 
-        public ActionResult ExportToPdf(DataTable salesdata)
+
+        public ActionResult ExportToPdf( List<SalesDetails> salesData)
         {
-            var salesDetailsList = new List<SalesDetails>();
+            //var salesDetailsList = new List<SalesDetails>();
 
-            foreach (DataRow row in salesdata.Rows)
-            {
-                var salesDetails = new SalesDetails
-                {
-                    //BillNo = Convert.ToInt64(row["BillNo"]),
-                    //ProductId = Convert.ToInt16(row["ProductId"]),
-                    //Quantity = Convert.ToDecimal(row["Quantity"]),
-                    //Amount = Convert.ToDecimal(row["Amount"])
+            //foreach (DataRow row in salesdata.Rows)
+            //{
+            //    var salesDetails = new SalesDetails
+            //    {
+            //        //BillNo = Convert.ToInt64(row["BillNo"]),
+            //        //ProductId = Convert.ToInt16(row["ProductId"]),
+            //        //Quantity = Convert.ToDecimal(row["Quantity"]),
+            //        //Amount = Convert.ToDecimal(row["Amount"])
 
-                };
+            //    };
 
-                salesDetailsList.Add(salesDetails);
-            }
-            var fileContents = GeneratePdf(salesDetailsList);
+            //    salesDetailsList.Add(salesDetails);
+            //}
+            var fileContents = GeneratePdf(salesData);
 
             string location = "SalesReport";
             string currentDateTime = DateTime.Now.ToString("yyyyMMdd_HHmmss");

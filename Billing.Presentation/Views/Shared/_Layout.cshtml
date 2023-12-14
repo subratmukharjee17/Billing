@@ -66,7 +66,8 @@
                         </li>
 
                         <li>
-                            @Html.ActionLink("Reports", "Report", "Product")
+                           @* @Html.ActionLink("Reports", "Report", "Product")*@
+                            <a href="@Url.Action("Report", "Product")">Reports</a>
                         </li>
 
                         <li class="d-none">

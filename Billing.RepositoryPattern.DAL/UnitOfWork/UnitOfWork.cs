@@ -19,8 +19,9 @@ namespace Billing.RepositoryPattern.InfraStructure.UnitOfWork
         private IProductRepository _productRepository;
         private IBillingInfoRepository _billingInfoRepository;
         private ICustomerRepository _customerRepository;
+		private ICustomerBillRepository _customerBillRepository;
 
-        public UnitOfWork(ApplicationDbContext dbContext)
+		public UnitOfWork(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -88,7 +89,15 @@ namespace Billing.RepositoryPattern.InfraStructure.UnitOfWork
                 return _customerRepository = _customerRepository ?? new CustomerRepository(_dbContext);
             }
         }
-        public void Commit()
+
+		public ICustomerBillRepository CustomerBillRepository
+		{
+			get
+			{
+				return _customerBillRepository = _customerBillRepository ?? new CustomerBillRepository(_dbContext);
+			}
+		}
+		public void Commit()
             => _dbContext.SaveChanges();
 
 
@@ -102,5 +111,11 @@ namespace Billing.RepositoryPattern.InfraStructure.UnitOfWork
 
         public async Task RollbackAsync()
             => await _dbContext.DisposeAsync();
-    }
+
+		//public async Task<int> GetMaxBillingIdAsync()
+		//{
+		//	return await _dbContext.BillingInfo.MaxAsync(entity => entity.BillingId);
+		//}
+
+	}
 }

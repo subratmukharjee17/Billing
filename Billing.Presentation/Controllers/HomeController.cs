@@ -58,42 +58,8 @@ namespace Billing.Presentation.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+		
+		
 
-
-        public IActionResult Sales()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AddSale([FromBody] List<SalesDetails> salesDetailsList)
-        {
-            //string apiUrl = _apiUrl + "Sales/";// "http://localhost:36942/api/Sales/";
-            string apiUrl = "http://localhost:36942/api/Sales/";
-            // Process the list of SalesDetails objects
-            foreach (var salesDetails in salesDetailsList)
-            {
-                var json = JsonConvert.SerializeObject(salesDetails);
-                var data = new StringContent(json, Encoding.UTF8, "application/json");
-
-                using (HttpClient client = new HttpClient())
-                {
-                    client.BaseAddress = new Uri(apiUrl);
-                    client.DefaultRequestHeaders.Accept.Clear();
-                    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                    HttpResponseMessage response = await client.PostAsync("AddSales", data);
-                    if (response.IsSuccessStatusCode)
-                    {
-                        // return View();
-                    }
-
-
-                }
-            }
-
-            return Json("");
-        }
-
-
-    }
+	}
 }
