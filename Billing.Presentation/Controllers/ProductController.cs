@@ -96,10 +96,10 @@ namespace Billing.Presentation.Controllers
             var excelContent = GenerateExcelContent(salesData);
 
             // Return the Excel file as a response
-            var result = new FileContentResult(excelContent, "application/vnd.ms-excel")
-            {
-                FileDownloadName = "SalesData.xls"
-            };
+            var result = File(excelContent, "application/vnd.ms-excel", "SalesData.xls");
+            //{
+            //    FileDownloadName = "SalesData.xls"
+            //};
 
             return result;
         }
@@ -153,226 +153,77 @@ namespace Billing.Presentation.Controllers
             return excelBytes;
         }
 
-        //public IActionResult ExportToExcel(List<SalesDetails> salesData)
-        //{
-        //    var excelContent = new StringBuilder();
 
-        //    // Excel header
-        //    excelContent.AppendLine("<?xml version=\"1.0\"?>");
-        //    excelContent.AppendLine("<Workbook xmlns=\"urn:schemas-microsoft-com:office:spreadsheet\"");
-        //    excelContent.AppendLine("xmlns:ss=\"urn:schemas-microsoft-com:office:spreadsheet\">");
-        //    excelContent.AppendLine("<Worksheet ss:Name=\"Sheet1\">");
-        //    excelContent.AppendLine("<Table>");
+        public ActionResult ExportToPdf( List<SalesDetails> salesData)
+        {
+            //var salesDetailsList = new List<SalesDetails>();
 
-        //    // Get property names from the type of the first data item
-        //    var propertyNames = typeof(SalesDetails).GetProperties()
-        //                                            .Select(property => property.Name)
-        //                                            .ToList();
+            //foreach (DataRow row in salesdata.Rows)
+            //{
+            //    var salesDetails = new SalesDetails
+            //    {
+            //        //BillNo = Convert.ToInt64(row["BillNo"]),
+            //        //ProductId = Convert.ToInt16(row["ProductId"]),
+            //        //Quantity = Convert.ToDecimal(row["Quantity"]),
+            //        //Amount = Convert.ToDecimal(row["Amount"])
 
-        //    // Add column headers dynamically
-        //    excelContent.AppendLine("<Row>");
-        //    foreach (var propertyName in propertyNames)
-        //    {
-        //        excelContent.AppendLine($"<Cell><Data ss:Type=\"String\">{propertyName}</Data></Cell>");
-        //    }
-        //    excelContent.AppendLine("</Row>");
+            //    };
 
-        //    // Add data rows
-        //    foreach (var item in salesData)
-        //    {
-        //        excelContent.AppendLine("<Row>");
-        //        foreach (var propertyName in propertyNames)
-        //        {
-        //            // Use reflection to get property value dynamically
-        //            var propertyValue = item.GetType().GetProperty(propertyName)?.GetValue(item);
-        //            excelContent.AppendLine($"<Cell><Data ss:Type=\"String\">{propertyValue}</Data></Cell>");
-        //        }
-        //        excelContent.AppendLine("</Row>");
-        //    }
+            //    salesDetailsList.Add(salesDetails);
+            //}
+            var fileContents = GeneratePdf(salesData);
 
-        //    // Excel footer
-        //    excelContent.AppendLine("</Table>");
-        //    excelContent.AppendLine("</Worksheet>");
-        //    excelContent.AppendLine("</Workbook>");
+            string location = "SalesReport";
+            string currentDateTime = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+            string extension = ".pdf";
+            string filename = $"{location}_{currentDateTime}{extension}";
 
-        //    // Convert the Excel content to a byte array
-        //    var encoding = new UTF8Encoding();
-        //    var excelBytes = encoding.GetBytes(excelContent.ToString());
+            var result = new FileContentResult(fileContents, "application/pdf")
+            {
+                FileDownloadName = filename
+            };
 
-        //    // Return the Excel file as a response
-        //    return File(excelBytes, "application/vnd.ms-excel", "SalesData.xls");
-        //}
+            return result;
+        }
 
+        public static byte[] GeneratePdf(IEnumerable<SalesDetails> data)
+        {
+            var document = new PdfDocument();
+            var page = document.AddPage();
+            var gfx = XGraphics.FromPdfPage(page);
+            GlobalFontSettings.FontResolver = new CustomFontResolver();
 
-        //public ActionResult ExportToExcel(SalesDetails salesdata)
-        //{
+            XFont font = new XFont("Verdana", 12);
+            //   var font = new MigraDoc.DocumentObjectModel.Font("Verdana", 12);
+            // font.Bold = true;
+            int y = 40;
 
-        //    var data = salesdata;// Enumerable.Empty<SalesDetails>();
+            // Add column headers dynamically
+            foreach (var property in typeof(SalesDetails).GetProperties())
+            {
+                gfx.DrawString(property.Name, font, XBrushes.Black, new XRect(40, y, 200, 20), XStringFormats.TopLeft);
+                y += 20;
+            }
 
-        //    // var data = db.MHEPLSCMDatas.Where(x => x.UploadDate == Fdt).ToList();         
-        //    string location = "SalesReport";
-        //    string currentDateTime = DateTime.Now.ToString("yyyyMMdd_HHmmss");
-        //    string extension = ".xls";
-        //    string filename = $"{location}_{currentDateTime}{extension}";
+            // Add data rows
+            foreach (var item in data)
+            {
+                y += 20;
 
+                foreach (var property in typeof(SalesDetails).GetProperties())
+                {
+                    var value = property.GetValue(item)?.ToString() ?? "N/A";
+                    gfx.DrawString(value, font, XBrushes.Black, new XRect(40, y, 200, 20), XStringFormats.TopLeft);
+                    y += 20;
+                }
+            }
 
-        //    var salesDetailsList = new List<SalesDetails>();
+            // Save the document to a memory stream
+            var pdfStream = new System.IO.MemoryStream();
+            document.Save(pdfStream, false);
+            return pdfStream.ToArray();
 
-        //    foreach (DataRow row in salesdata.Rows)
-        //    {
-        //        var salesDetails = new SalesDetails
-        //        {
-        //            BillingId = Convert.ToInt16(row["BillingId"]),
-        //            ProductId = Convert.ToInt16(row["ProductId"]),
-        //            Quantity = Convert.ToDecimal(row["Quantity"]),
-        //            Amount = Convert.ToDecimal(row["Amount"])
-        //        };
-
-        //        salesDetailsList.Add(salesDetails);
-        //    }
-        //    // Create the Excel file
-        //    var fileContents = GenerateExcelFile(salesDetailsList);
-
-        //    // Return the file as a response
-        //    var result = new FileContentResult(fileContents, "application/vnd.ms-excel")
-        //    {
-        //        FileDownloadName = filename
-        //        //FileDownloadName = "testing1234.xls"
-        //    };
-
-        //    return result;
-
-        //}
-
-
-
-        //private byte[] GenerateExcelFile(IEnumerable<SalesDetails> data)
-        //{
-        //    //public  ActionResult GenerateExcelFile(IEnumerable<SalesDetails> data)
-        //    //{
-        //    var excelContent = new StringBuilder();
-
-        //    excelContent.AppendLine("<?xml version=\"1.0\"?>");
-        //    excelContent.AppendLine("<Workbook xmlns=\"urn:schemas-microsoft-com:office:spreadsheet\"");
-        //    excelContent.AppendLine("xmlns:ss=\"urn:schemas-microsoft-com:office:spreadsheet\">");
-        //    excelContent.AppendLine("<Worksheet ss:Name=\"Sheet1\">");
-        //    excelContent.AppendLine("<Table>");
-
-        //    // Get property names from the type of the first data item
-        //    var propertyNames = typeof(SalesDetails).GetProperties()
-        //                                            .Select(property => property.Name)
-        //                                            .ToList();
-
-        //    // Add column headers dynamically
-        //    excelContent.AppendLine("<Row>");
-        //    foreach (var propertyName in propertyNames)
-        //    {
-        //        excelContent.AppendLine($"<Cell><Data ss:Type=\"String\">{propertyName}</Data></Cell>");
-        //    }
-        //    excelContent.AppendLine("</Row>");
-
-        //    // Add data rows
-        //    foreach (var item in data)
-        //    {
-        //        excelContent.AppendLine("<Row>");
-        //        foreach (var propertyName in propertyNames)
-        //        {
-        //            // Use reflection to get property value dynamically
-        //            var propertyValue = item.GetType().GetProperty(propertyName)?.GetValue(item);
-        //            excelContent.AppendLine($"<Cell><Data ss:Type=\"String\">{propertyValue}</Data></Cell>");
-        //        }
-        //        excelContent.AppendLine("</Row>");
-        //    }
-
-        //    excelContent.AppendLine("</Table>");
-        //    excelContent.AppendLine("</Worksheet>");
-        //    excelContent.AppendLine("</Workbook>");
-
-        //    // Convert the Excel content to a byte array
-        //    var encoding = new UTF8Encoding();
-        //    var excelBytes = encoding.GetBytes(excelContent.ToString());
-
-        //    return excelBytes;
-
-        //    //var result = new FileContentResult(excelBytes, "application/vnd.ms-excel")
-        //    //{
-        //    //   // FileDownloadName = filename
-        //    //    FileDownloadName = "testing1234.xls"
-        //    //};
-
-        //    //return result;
-        //}
-
-        //public ActionResult ExportToPdf(DataTable salesdata)
-        //{
-        //    var salesDetailsList = new List<SalesDetails>();
-
-        //    foreach (DataRow row in salesdata.Rows)
-        //    {
-        //        var salesDetails = new SalesDetails
-        //        {
-        //            //BillNo = Convert.ToInt64(row["BillNo"]),
-        //            //ProductId = Convert.ToInt16(row["ProductId"]),
-        //            //Quantity = Convert.ToDecimal(row["Quantity"]),
-        //            //Amount = Convert.ToDecimal(row["Amount"])
-
-        //        };
-
-        //        salesDetailsList.Add(salesDetails);
-        //    }
-        //    var fileContents = GeneratePdf(salesDetailsList);
-
-        //    string location = "SalesReport";
-        //    string currentDateTime = DateTime.Now.ToString("yyyyMMdd_HHmmss");
-        //    string extension = ".pdf";
-        //    string filename = $"{location}_{currentDateTime}{extension}";
-
-        //    var result = new FileContentResult(fileContents, "application/pdf")
-        //    {
-        //        FileDownloadName = filename
-        //    };
-
-        //    return result;
-        //}
-
-        //public static byte[] GeneratePdf(IEnumerable<SalesDetails> data)
-        //{
-        //    var document = new PdfDocument();
-        //    var page = document.AddPage();
-        //    var gfx = XGraphics.FromPdfPage(page);
-        //    GlobalFontSettings.FontResolver = new CustomFontResolver();
-
-        //    XFont font = new XFont("Verdana", 12);
-        //    //   var font = new MigraDoc.DocumentObjectModel.Font("Verdana", 12);
-        //    // font.Bold = true;
-        //    int y = 40;
-
-        //    // Add column headers dynamically
-        //    foreach (var property in typeof(SalesDetails).GetProperties())
-        //    {
-        //        gfx.DrawString(property.Name, font, XBrushes.Black, new XRect(40, y, 200, 20), XStringFormats.TopLeft);
-        //        y += 20;
-        //    }
-
-        //    // Add data rows
-        //    foreach (var item in data)
-        //    {
-        //        y += 20;
-
-        //        foreach (var property in typeof(SalesDetails).GetProperties())
-        //        {
-        //            var value = property.GetValue(item)?.ToString() ?? "N/A";
-        //            gfx.DrawString(value, font, XBrushes.Black, new XRect(40, y, 200, 20), XStringFormats.TopLeft);
-        //            y += 20;
-        //        }
-        //    }
-
-        //    // Save the document to a memory stream
-        //    var pdfStream = new System.IO.MemoryStream();
-        //    document.Save(pdfStream, false);
-        //    return pdfStream.ToArray();
-
-        //}
+        }
 
     }
 }

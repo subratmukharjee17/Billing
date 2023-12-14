@@ -15,7 +15,7 @@ function submitForm(formDataArray) {
 
     $.ajax({
         type: 'POST',
-        url: '/Home/AddSale',
+        url: '/Sales/AddSale',
         contentType: 'application/json',
         dataType: 'json', 
         data: JSON.stringify(formDataArray),

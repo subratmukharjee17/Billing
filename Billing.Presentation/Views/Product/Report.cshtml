@@ -285,27 +285,32 @@
                 url: '/Product/GetSalesReport', 
                 method: "GET",
                 data: { FromDate: FromDate, ToDate: ToDate, ReportBy: ReportBy, reportType: reportType },
-                dataType: "json", 
+                dataType: "text",
                 success: function (data, status, xhr) {
-                    debugger;
-                    //var contentType = xhr.getResponseHeader('Content-Type');
+                    var contentType = xhr.getResponseHeader('Content-Type');
 
-                    //if (contentType === 'application/json') {
-                    //    // Handle JSON response
-                    //    console.log("Received JSON response", data);
-                    //} else if (contentType === 'application/vnd.ms-excel') {
-                    //    // Handle Excel response
-                    //    console.log("Received Excel response");
-                    //    var blob = new Blob([data], { type: contentType });
-                    //    var link = document.createElement('a');
-                    //    link.href = window.URL.createObjectURL(blob);
-                    //    link.download = 'SalesData.xls'; // Specify the desired file name
-                    //    link.click();
-                    //} 
-                    //else {
-                    //    // Handle other content types or error cases
-                    //    console.error("Unexpected content type", contentType);
-                    //}
+                    if (contentType === 'application/json') {
+                        // Handle JSON response (if needed)
+                       // console.log("Received JSON response", data);
+                    } else if (contentType === 'application/vnd.ms-excel') {
+                        // Handle Excel response
+                        console.log("Received Excel response");
+
+                        // Create a Blob from the response data
+                        var blob = new Blob([data], { type: contentType });
+                        var currentDate = new Date();
+                        var formattedDate = currentDate.toISOString().slice(0, 19).replace(/:/g, '-');
+                        var fileName = 'SalesData_' + formattedDate + '.xls';
+
+                        // Create a link element and trigger a click to download the file
+                        var link = document.createElement('a');
+                        link.href = window.URL.createObjectURL(blob);
+                        link.download = fileName; // Specify the desired file name
+                        link.click();
+                    } else {
+                        // Handle other content types or error cases
+                        console.error("Unexpected content type", contentType);
+                    }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.error('AJAX Error:', textStatus, errorThrown);
