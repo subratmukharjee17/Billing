@@ -22,8 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Billing.RepositoryPattern.DAL\Billing.RepositoryPattern.InfraStructure.csproj" />
-    <ProjectReference Include="..\Billing.RepositoryPattern.Shared\Billing.RepositoryPattern.Domain.csproj" />
+    <ProjectReference Include="..\Billing.RepositoryPattern.Domain\Billing.RepositoryPattern.Domain.csproj" />
+    <ProjectReference Include="..\Billing.RepositoryPattern.InfraStructure\Billing.RepositoryPattern.InfraStructure.csproj" />
   </ItemGroup>
 
 </Project>
